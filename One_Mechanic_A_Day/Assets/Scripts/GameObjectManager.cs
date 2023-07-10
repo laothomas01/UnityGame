@@ -6,9 +6,7 @@ public class GameObjectManager : MonoBehaviour
 {
    public GameObject objectPoolManager;
    public Camera MainCamera;
-   
    EnemyPool enemyPool;
-
    void Start()
    {
       enemyPool = objectPoolManager.GetComponent<EnemyPool>();
@@ -38,6 +36,10 @@ public class GameObjectManager : MonoBehaviour
            }
         }
   
+    }
+    public EnemyPool GetEnemyPool()
+    {
+      return enemyPool;
     }
 
    

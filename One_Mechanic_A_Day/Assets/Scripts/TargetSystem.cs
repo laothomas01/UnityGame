@@ -8,14 +8,17 @@ using UnityEngine;
 public class TargetSystem : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject crossHairUI;
-    public GameObject weaponUI;
-    public GameObject enemy;
+    // public GameObject crossHairUI;
+    // public GameObject weaponUI;
+    // public GameObject enemy;
+
+    public GameObjectManager objectManager;
     public float attackRange;
     Vector3 direction;
     public float offsetDistance;
     private float rotation;
-    
+    [SerializeField] private float detectionDistanceThreshold;
+
     //@TODO later
     private GameObject currentTarget;
     void Start()
@@ -26,14 +29,19 @@ public class TargetSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //@TODO need to change the "enemy.transform" to a currently found target later
-       
-        //back-end
-        rotation = Mathf.Atan2(enemy.transform.position.y - transform.position.y,enemy.transform.position.x - transform.position.x);
-        direction.Set(Mathf.Cos(rotation),Mathf.Sin(rotation),0);
-        // //front-end
-        crossHairUI.transform.position = transform.position + direction * offsetDistance;
-        
+        // for (int i = 0; i < objectManager.GetEnemyPool().getObjectPool().Count; i++)
+        // {
+
+        //     if (objectManager.GetEnemyPool().getObjectPool()[i].activeInHierarchy)
+        //     {
+        //         if (Vector2.Distance(transform.position, objectManager.GetEnemyPool().getObjectPool()[i].transform.position) < detectionDistanceThreshold)
+        //         {
+        //             setCurrentTarget(objectManager.GetEnemyPool().getObjectPool()[i]);
+        //             break;
+        //         }
+        //     }
+
+        // }
 
     }
     public void setCurrentTarget(GameObject target)
@@ -56,6 +64,15 @@ public class TargetSystem : MonoBehaviour
     {
         return direction;
     }
+    public float getDetectionDistance()
+    {
+        return detectionDistanceThreshold;
+    }
 
-    
+    public GameObjectManager getObjectManager()
+    {
+        return objectManager;
+    }
+
+
 }

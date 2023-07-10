@@ -9,15 +9,13 @@ public class BulletController2D : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     private Vector3 direction;
     // Start is called before the first frame update
-  
+
      public float animationDuration = 2f;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
-    
     }
-
     // Update is called once per frame
     void Update()
     {

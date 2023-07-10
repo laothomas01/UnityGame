@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f27d9d6f514b774ebe60d9b3b320e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountToPool: 50
+  amountToPool: 1
   enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
 --- !u!1 &1566170852
 GameObject:
@@ -365,7 +365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1522600702707065427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -537,7 +537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3015913130685057060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,11 +550,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fb0efb43f9bf848bf79495c5ba8d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossHairUI: {fileID: 1046002828897574134}
-  weaponUI: {fileID: 0}
-  enemy: {fileID: 2487753174535639298}
+  objectManager: {fileID: 222218396}
   attackRange: 0
   offsetDistance: 1
+  detectionDistanceThreshold: 10
 --- !u!95 &4405663873967578937
 Animator:
   serializedVersion: 5
@@ -641,7 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25319051268645e4e99581df6b4681a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 150
   rb: {fileID: 2419274927620796679}
 --- !u!4 &5180844572441187444
 Transform:
