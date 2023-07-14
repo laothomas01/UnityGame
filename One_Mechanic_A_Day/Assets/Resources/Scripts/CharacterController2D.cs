@@ -19,7 +19,6 @@ public class CharacterController2D : MonoBehaviour
    [SerializeField] private Rigidbody2D rb;
    Vector3 direction;
 
-
    //calculate direction between player and enemy
    // TargetSystem targetSystem;
    private float testAttackTimer = 0f;
@@ -58,8 +57,6 @@ public class CharacterController2D : MonoBehaviour
 
    private void Attack()
    {
-
-
       GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
 
       if (bullet != null && targetSystem.getCurrentTarget() != null)

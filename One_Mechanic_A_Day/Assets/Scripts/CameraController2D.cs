@@ -39,7 +39,6 @@ public class CameraController2D : MonoBehaviour
     }
     void Update()
     {
-        // CheckEnemyVisibileInCamera();
     }
     private void FixedUpdate()
     {
@@ -48,6 +47,7 @@ public class CameraController2D : MonoBehaviour
         Vector3 lerpPosition = Vector3.Lerp(transform.position, finalPosition, cameraSpeed);
         transform.position = lerpPosition;
     }
+
     // private void CheckEnemyVisibileInCamera()
     // {
     //     Plane[] frustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
@@ -66,7 +66,6 @@ public class CameraController2D : MonoBehaviour
     //             }
     //         }
     //     }
-
     // }
 
 }

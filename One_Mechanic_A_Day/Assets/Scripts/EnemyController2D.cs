@@ -1,73 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// <summary>
-/// Handles updates to the enemy
-/// </summary>
 public class EnemyController2D : MonoBehaviour
 {
 
-    // Start is called before the first frame update
+    enum enemyState
+    {
+        moving,
+        idle
+    }
+
     private float horizontal;
     private float vertical;
     private bool isFacingRight = false;
     [SerializeField] private Rigidbody2D rb;
+
+    //target to follow
     private GameObject player;
 
     public float maxMoveSpeed;
-    private float currentMoveSpeed;
-    private int canMove = 1;
-    bool isHit_ = false;
+    enemyState state;
 
+    Vector3 direction;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        maxMoveSpeed = Random.Range(90,200);
+        maxMoveSpeed = Random.Range(90, 200);
+        state = enemyState.moving;
     }
 
     // Update is called once per frame
     void Update()
     {
+        float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
 
-
-        float distance = Vector2.Distance(player.transform.position, transform.position);
-
-
-        // Debug.Log("DISTANCE:" + Mathf.RoundToInt(distance));
-        if (Mathf.RoundToInt(distance) == 0)
+        if (Mathf.RoundToInt(distanceBetweenPlayer) == 0)
         {
-            canMove = 0;
+            state = enemyState.idle;
+        }
+        else
+        {
+            state = enemyState.moving;
+        }
+
+        if (state == enemyState.idle)
+        {
+            direction.Set(0, 0, 0);
             gameObject.GetComponent<Animator>().Play("Enemy_Idle_Anim");
         }
         else
         {
-            canMove = 1;
-            gameObject.GetComponent<Animator>().Play("Enemy_Running_Anim");
+            ChasePlayer(player);
         }
 
-        currentMoveSpeed = maxMoveSpeed * Time.deltaTime * canMove;
+
+        rb.velocity = direction * maxMoveSpeed * Time.deltaTime;
 
         Flip();
     }
     void FixedUpdate()
     {
 
-        ChasePlayer(player);
+        // ChasePlayer(player);
+
 
     }
     private void ChasePlayer(GameObject player)
     {
+
         float moveDirection = Mathf.Atan2(player.transform.position.y - transform.position.y,
              player.transform.position.x - transform.position.x);
 
         horizontal = Mathf.Cos(moveDirection);
         vertical = Mathf.Sin(moveDirection);
 
-        rb.velocity = new Vector2(horizontal * currentMoveSpeed, vertical * currentMoveSpeed);
+        direction.Set(horizontal,vertical,0);
+
+        gameObject.GetComponent<Animator>().Play("Enemy_Running_Anim");
+
     }
     private void Flip()
     {
@@ -86,10 +101,6 @@ public class EnemyController2D : MonoBehaviour
     public void setObjectActive(bool active)
     {
         this.gameObject.SetActive(active);
-    }
-    public void isHit(bool hit)
-    {
-        isHit_ = hit;
     }
 
 

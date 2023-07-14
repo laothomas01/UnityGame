@@ -10,9 +10,12 @@ public class ObjectPoolManager : MonoBehaviour
 
    private List<GameObject> enemyPool = new List<GameObject>();
 
-   public int amountToPool;
+   public int bulletAmountToPool;
+   public int enemyAmountToPool;
+
 
    [SerializeField] private GameObject bulletPrefab;
+   [SerializeField] private GameObject enemyPrefab;
 
    private void Awake()
    {
@@ -21,7 +24,8 @@ public class ObjectPoolManager : MonoBehaviour
 
    void Start()
    {
-      initializeBulletPool(amountToPool);
+      initializeBulletPool(bulletAmountToPool);
+      initializeEnemyPool(enemyAmountToPool);
    }
    void Update()
    {
@@ -46,5 +50,34 @@ public class ObjectPoolManager : MonoBehaviour
          }
       }
       return null;
+   }
+   public List<GameObject> getBulletPool()
+   {
+      return bulletPool;
+   }
+   public GameObject GetPooledEnemyObject()
+   {
+       for (int i = 0; i < enemyPool.Count; i++)
+      {
+         if (!enemyPool[i].activeInHierarchy)
+         {
+            return enemyPool[i];
+         }
+      }
+      return null;
+   }
+   public void initializeEnemyPool(float amountToPool)
+   {
+      for (int i = 0; i < amountToPool; i++)
+      {
+         GameObject obj = Instantiate(enemyPrefab);
+         obj.SetActive(false);
+         enemyPool.Add(obj);
+      }
+   }
+
+    public List<GameObject> getEnemyPool()
+   {
+      return enemyPool;
    }
 }

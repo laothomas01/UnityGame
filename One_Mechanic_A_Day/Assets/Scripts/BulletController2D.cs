@@ -21,7 +21,6 @@ public class BulletController2D : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // direction = new Vector3(1,1);
     }
     void Update()
     {
@@ -36,11 +35,6 @@ public class BulletController2D : MonoBehaviour
         }
         rb.velocity = direction * bulletSpeed * Time.deltaTime;
 
-    }
-    void FixedUpdate()
-    {
-
-        rb.velocity = direction * bulletSpeed * Time.fixedDeltaTime;
     }
 
 
