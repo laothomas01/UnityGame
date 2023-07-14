@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
-/// Handle updates to the player
+/// - handle player movement
+/// - handle player attacking
+/// - 
 /// </summary>
 public class CharacterController2D : MonoBehaviour
 {
@@ -13,12 +17,14 @@ public class CharacterController2D : MonoBehaviour
    [SerializeField] private float moveSpeed = 1f;
    private bool isFacingRight = false;
    [SerializeField] private Rigidbody2D rb;
+   Vector3 direction;
+
 
    //calculate direction between player and enemy
-   TargetSystem targetSystem;
-   private float testAttackTimer;
-   private float testAttackTimeThreshold = 3f;
-
+   // TargetSystem targetSystem;
+   private float testAttackTimer = 0f;
+   public float testAttackTimeThreshold = 3f;
+   private TargetSystem targetSystem;
    void Start()
    {
       targetSystem = GetComponent<TargetSystem>();
@@ -27,35 +33,20 @@ public class CharacterController2D : MonoBehaviour
    // Update is called once per frame
    void Update()
    {
+
       if (testAttackTimer > testAttackTimeThreshold)
       {
          testAttackTimer = 0;
-         // Attack();
+         Attack();
       }
       else
       {
          testAttackTimer += Time.deltaTime;
       }
-
-
+      direction.Set(moveHorizontal,moveVertical,0);
       HandleUserInput();
       HandleMoveAnimations();
       Flip();
-
-      for(int i = 0; i < targetSystem.getObjectManager().GetEnemyPool().getObjectPool().Count; i++)
-      {
-         if(targetSystem.getObjectManager().GetEnemyPool().getObjectPool()[i].activeInHierarchy)
-         {
-            if(Vector2.Distance(transform.position,targetSystem.getObjectManager().GetEnemyPool().getObjectPool()[i].transform.position) < targetSystem.getDetectionDistance())
-            {
-               Debug.DrawLine(transform.position,targetSystem.getObjectManager().GetEnemyPool().getObjectPool()[i].transform.position,Color.green);
-               break;
-            }
-         }
-      }
-      testAttackTimer += Time.deltaTime;
-
-      
 
    }
 
@@ -68,22 +59,22 @@ public class CharacterController2D : MonoBehaviour
    private void Attack()
    {
 
-      GameObject bullet = BulletPool.instance.GetPooledObject();
-      
+
+      GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
+
       if (bullet != null && targetSystem.getCurrentTarget() != null)
       {
-         BulletController2D bulletController2D = bullet.GetComponent<BulletController2D>();
-         bulletController2D.setPosition(transform.position);
-         Vector3 direction = targetSystem.getCurrentTarget().transform.position - transform.position;
-         bulletController2D.setDirection(direction);
+         bullet.SetActive(true);
+         Vector3 direction = targetSystem.getCurrentTarget().transform.position - this.transform.position;
          float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-         bulletController2D.setRotation(rotation);
-         bulletController2D.setObjectActive(true);
+         bullet.transform.position = this.transform.position; // iniitial_position + direction * offset distance
+         bullet.transform.rotation = Quaternion.Euler(0, 0, rotation);
+         direction.Normalize();
+         bullet.GetComponent<BulletController2D>().setDirection(direction);
+
       }
 
-
    }
-
    private void HandleMoveAnimations()
    {
       if (rb.velocity.x != 0 || rb.velocity.y != 0)
@@ -99,7 +90,7 @@ public class CharacterController2D : MonoBehaviour
    private void FixedUpdate()
    {
 
-      rb.velocity = new Vector2(moveHorizontal * moveSpeed * Time.deltaTime, moveVertical * moveSpeed * Time.fixedDeltaTime);
+         rb.velocity = direction * moveSpeed * Time.deltaTime;
    }
 
 
@@ -114,6 +105,14 @@ public class CharacterController2D : MonoBehaviour
          localScale.x *= -1f;
          transform.localScale = localScale;
       }
+   }
+   private bool IsAttackOnCooldown()
+   {
+      if (testAttackTimer < testAttackTimeThreshold)
+      {
+         return true;
+      }
+      return false;
    }
 
 }

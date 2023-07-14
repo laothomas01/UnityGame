@@ -1,60 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public abstract class ObjectPool : MonoBehaviour
 {
-     public static ObjectPool instance;
-    private List<GameObject> pooledObjects = new List<GameObject>();
-    public int bulletPoolAmount;
-    public int enemyPoolAmount;
-    
-    //@TODO do not limit yourself to the fireball prefab
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject enemyPrefab;
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
 
-    // Start is called before the first frame update
+   // private List<GameObject> pooledObjects = new List<GameObject>();
 
-    void Start()
-    {
-        //instantiate pool with amount wanted to pool
-        for(int i = 0; i < bulletPoolAmount; i++)
-        {
-            GameObject obj = Instantiate(bulletPrefab);
-            obj.SetActive(false);
-            pooledObjects.Add(obj);
-        }
-        for(int i = 0; i < enemyPoolAmount; i++)
-        {
-               GameObject obj = Instantiate(bulletPrefab);
-            obj.SetActive(false);
-            pooledObjects.Add(obj);
-        }
-    }
-    public GameObject GetBulletPooledObject()
-    {
-        for(int i= 0; i < pooledObjects.Count; i++)
-        {
-            //if we find an available bullet that we can shoot
-           if(!pooledObjects[i].activeInHierarchy)
-           {
-                return pooledObjects[i];
-           } 
-        
-        }
-        return null;
-    }
+   // [SerializeField] protected int amountToPool;
+   // [SerializeField] protected GameObject prefab;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   // protected void initPool(float amount)
+   // {
+   //    for(int i = 0; i < amountToPool; i++)
+   //    {
+   //       GameObject gameObject = Instantiate(prefab);
+   //       gameObject.SetActive(false);
+   //       pooledObjects.Add(gameObject);
+   //    }
+   // }
+   // public GameObject GetPooledObject()
+   // {
+   //    for(int i = 0; i < pooledObjects.Count; i++)
+   //    {
+   //       if(!pooledObjects[i].activeInHierarchy)
+   //       {
+   //          pooledObjects[i].SetActive(true);
+   //          return pooledObjects[i];
+   //       }
+   //    }
+   //    return null;
+   // }
+   // public List<GameObject> getObjectPool()
+   // {
+   //    return pooledObjects;
+   // }
+
+
+
 }

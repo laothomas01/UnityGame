@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 
 public class BulletController2D : MonoBehaviour
 {
@@ -8,35 +9,85 @@ public class BulletController2D : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float bulletSpeed;
     private Vector3 direction;
+    bool hasHitEnemy = false;
     // Start is called before the first frame update
 
-     public float animationDuration = 2f;
-    
+    public float animationDuration = 2f;
+    private float lifeSpan;
+    public float lifeSpanThreshold;
+
+    //handling overlapping collider detection
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();   
+        rb = GetComponent<Rigidbody2D>();
+        // direction = new Vector3(1,1);
     }
-    // Update is called once per frame
     void Update()
     {
-        //@TODO make sure to select the proper animation to the respective bullet
-        // gameObject.GetComponent<Animator>().Play("Fireball_Move");
+        if (lifeSpan > lifeSpanThreshold)
+        {
+            lifeSpan = 0;
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            lifeSpan += Time.deltaTime;
+        }
+        rb.velocity = direction * bulletSpeed * Time.deltaTime;
+
     }
     void FixedUpdate()
     {
-         move(Time.fixedDeltaTime);
-    }
-   
 
-   //@TODO find a way to trigger an explosion animation
-    private void OnTriggerEnter2D(Collider2D other) {
-        
-        if(other.CompareTag("Enemy"))
+        rb.velocity = direction * bulletSpeed * Time.fixedDeltaTime;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
         {
-            setObjectActive(false);
-        }
-    }
+            //useful for handling explosions or corpse explosion
+            Collider2D[] overlappingColliders = new Collider2D[1];
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.useTriggers = true;
+            int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
+            for (int i = 0; i < numColliders; i++)
+            {
+                if (overlappingColliders[i].CompareTag("Enemy"))
+                {
+                    // Handle the collision with the enemy
 
+                    // Deactivate the enemy
+
+                    overlappingColliders[i].gameObject.SetActive(false);
+
+                    setObjectActive(false);
+
+                    // Break out of the loop after deactivating the first enemy hit
+                    break;
+                }
+            }
+        }
+
+
+        // if (other.CompareTag("Enemy"))
+        // {
+
+        //     Collider2D[] overlappingColliders = new Collider2D[3]; // check 3 colliders each time
+        //     ContactFilter2D filter = new ContactFilter2D();
+        //     filter.useTriggers = true;
+        //     int numColliders = Physics2D.OverlapCollider(GetComponent<BoxCollider2D>(), filter, overlappingColliders);
+        //     for(int i =0; i < numColliders; i++)
+        //     {
+        //         Collider2D collider = overlappingColliders[i];
+        //         if(collider.CompareTag("Enemy"))
+        //     }
+
+
+        // }
+    }
 
     public Rigidbody2D GetRigidbody2D()
     {
@@ -52,7 +103,7 @@ public class BulletController2D : MonoBehaviour
     }
     public void setDirection(float x, float y)
     {
-        direction = new Vector3(x,y);
+        direction = new Vector3(x, y);
     }
     public Vector2 getDirection()
     {
@@ -62,9 +113,9 @@ public class BulletController2D : MonoBehaviour
     {
         this.gameObject.SetActive(active);
     }
-    public void setPosition(float x,float y)
+    public void setPosition(float x, float y)
     {
-        transform.position = new Vector3(x,y);
+        transform.position = new Vector3(x, y);
     }
     public void setPosition(Vector3 newPos)
     {
@@ -74,13 +125,13 @@ public class BulletController2D : MonoBehaviour
     {
         direction = dir;
     }
-    public void move( float dt)
+    public void move(float dt)
     {
-        rb.velocity = new Vector2(getDirection().x,getDirection().y) * bulletSpeed * dt;
+        rb.velocity = getDirection() * bulletSpeed * dt;
     }
-    public void setRotation(float rotation)
+    public void setRotation(float xrot, float yrot, float zrot)
     {
-        transform.rotation = Quaternion.Euler(0,0,rotation);
+        transform.rotation = Quaternion.Euler(xrot, yrot, zrot);
     }
 
 

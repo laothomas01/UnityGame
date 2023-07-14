@@ -20,13 +20,13 @@ public class EnemyController2D : MonoBehaviour
     public float maxMoveSpeed;
     private float currentMoveSpeed;
     private int canMove = 1;
-
+    bool isHit_ = false;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        maxMoveSpeed = Random.Range(100,150);
+        maxMoveSpeed = Random.Range(90,200);
     }
 
     // Update is called once per frame
@@ -87,13 +87,9 @@ public class EnemyController2D : MonoBehaviour
     {
         this.gameObject.SetActive(active);
     }
-    public void OnTriggerEnter2D(Collider2D other)
+    public void isHit(bool hit)
     {
-           
-        if(other.CompareTag("Projectile"))
-        {
-            setObjectActive(false);
-        }
+        isHit_ = hit;
     }
 
 
