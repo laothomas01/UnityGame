@@ -9,7 +9,6 @@ public class BulletController2D : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float bulletSpeed;
     private Vector3 direction;
-    bool hasHitEnemy = false;
     // Start is called before the first frame update
 
     public float animationDuration = 2f;
@@ -65,22 +64,6 @@ public class BulletController2D : MonoBehaviour
             }
         }
 
-
-        // if (other.CompareTag("Enemy"))
-        // {
-
-        //     Collider2D[] overlappingColliders = new Collider2D[3]; // check 3 colliders each time
-        //     ContactFilter2D filter = new ContactFilter2D();
-        //     filter.useTriggers = true;
-        //     int numColliders = Physics2D.OverlapCollider(GetComponent<BoxCollider2D>(), filter, overlappingColliders);
-        //     for(int i =0; i < numColliders; i++)
-        //     {
-        //         Collider2D collider = overlappingColliders[i];
-        //         if(collider.CompareTag("Enemy"))
-        //     }
-
-
-        // }
     }
 
     public Rigidbody2D GetRigidbody2D()

@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletAmountToPool: 10
-  enemyAmountToPool: 10
+  enemyAmountToPool: 1
   bulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
   enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
 --- !u!212 &1522600702707065427
@@ -421,7 +421,7 @@ Transform:
   m_GameObject: {fileID: 7574127931243387176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.41, y: 2.13, z: 0.014116665}
-  m_LocalScale: {x: -5, y: 5, z: 1}
+  m_LocalScale: {x: -2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -441,7 +441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 300
   rb: {fileID: 2419274927620796679}
-  testAttackTimeThreshold: 1
+  testAttackTimeThreshold: 0.23
+  DEBUG: 1
 --- !u!114 &8652251879329482858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fb0efb43f9bf848bf79495c5ba8d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionDistance: 0
+  detectionRange_: 2
+  waitToDetectClosestEnemyTimeout_: 3
 --- !u!1 &8766388487797195449
 GameObject:
   m_ObjectHideFlags: 0

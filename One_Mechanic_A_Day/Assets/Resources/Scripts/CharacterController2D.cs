@@ -19,33 +19,33 @@ public class CharacterController2D : MonoBehaviour
    [SerializeField] private Rigidbody2D rb;
    Vector3 direction;
 
-   //calculate direction between player and enemy
-   // TargetSystem targetSystem;
    private float testAttackTimer = 0f;
-   public float testAttackTimeThreshold = 3f;
+   public float testAttackTimeThreshold;
    private TargetSystem targetSystem;
+   public bool DEBUG;
    void Start()
    {
       targetSystem = GetComponent<TargetSystem>();
       rb = gameObject.GetComponent<Rigidbody2D>();
+      DEBUG = true;
    }
-   // Update is called once per frame
    void Update()
    {
 
-      if (testAttackTimer > testAttackTimeThreshold)
-      {
-         testAttackTimer = 0;
-         Attack();
-      }
-      else
-      {
-         testAttackTimer += Time.deltaTime;
-      }
-      direction.Set(moveHorizontal,moveVertical,0);
       HandleUserInput();
       HandleMoveAnimations();
       Flip();
+
+      // section to debug /visualize business logic 
+      if (DEBUG)
+      {
+         if (targetSystem.getClosestEnemy() != null)
+         {
+            Debug.DrawLine(transform.position, targetSystem.getClosestEnemy().transform.position, Color.green);
+         }
+      }
+
+      // testAttackTimer += Time.deltaTime;
 
    }
 
@@ -53,28 +53,34 @@ public class CharacterController2D : MonoBehaviour
    {
       moveHorizontal = Input.GetAxisRaw("Horizontal");
       moveVertical = Input.GetAxisRaw("Vertical");
+      direction.Set(moveHorizontal, moveVertical, 0);
    }
 
    private void Attack()
    {
       GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
 
-      if (bullet != null && targetSystem.getCurrentTarget() != null)
+
+      if (bullet != null)
       {
-         bullet.SetActive(true);
-         Vector3 direction = targetSystem.getCurrentTarget().transform.position - this.transform.position;
-         float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-         bullet.transform.position = this.transform.position; // iniitial_position + direction * offset distance
-         bullet.transform.rotation = Quaternion.Euler(0, 0, rotation);
-         direction.Normalize();
-         bullet.GetComponent<BulletController2D>().setDirection(direction);
+         Vector3 direction;
+         if (targetSystem.getClosestEnemy() != null)
+         {
+            bullet.SetActive(true);
+            bullet.transform.position = this.transform.position;
+            direction = targetSystem.getClosestEnemy().transform.position - this.transform.position;
+            float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+            bullet.GetComponent<BulletController2D>().setDirection(direction);
+            bullet.GetComponent<BulletController2D>().setPosition(this.transform.position);
+            bullet.GetComponent<BulletController2D>().setRotation(0, 0, rotation);
+         }
 
       }
 
    }
    private void HandleMoveAnimations()
    {
-      if (rb.velocity.x != 0 || rb.velocity.y != 0)
+      if (moveHorizontal != 0 || moveVertical != 0)
       {
          gameObject.GetComponent<Animator>().Play("Run_Anim");
       }
@@ -87,7 +93,7 @@ public class CharacterController2D : MonoBehaviour
    private void FixedUpdate()
    {
 
-         rb.velocity = direction * moveSpeed * Time.deltaTime;
+      rb.velocity = direction * moveSpeed * Time.deltaTime;
    }
 
 

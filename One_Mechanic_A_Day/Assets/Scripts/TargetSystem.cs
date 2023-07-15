@@ -7,128 +7,85 @@ using UnityEngine;
 /// </summary>
 public class TargetSystem : MonoBehaviour
 {
-    public float detectionRange;
-    // public float detectionRangeThreshold = 10f;
-    // public float enemyOutOfRangeThreshold = 5f;
-    // private float enemyDetectionTimer;
-    // private bool isEnemyInRange;
+    public float detectionRange_;
+    private float waitToDetectClosestEnemyTimer_;
+    public float waitToDetectClosestEnemyTimeout_;
+    GameObject closestEnemy_;
+    void Start()
+    {
+        closestEnemy_ = null;
+    }
+    void Update()
+    {
 
-    // public GameObject objectPoolManager;
+        findClosestEnemy();
+        handleDoneWaitingToDetectClosestEnemyEvent();
 
-    // EnemyPool enemyPool;
-    // BulletPool bulletPool;
+    }
+    public void findClosestEnemy()
+    {
 
-    // private GameObject currentTargetEnemy;
-    // void Start()
-    // {
-    //     enemyPool = objectPoolManager.GetComponent<EnemyPool>();
-    //     bulletPool = objectPoolManager.GetComponent<BulletPool>();
-    //     isEnemyInRange = false;
-    // }
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-
-
-    //     // Loop through the enemy pool
-
-    //     // foreach(GameObject enemy in enemyPool)
-
-    //     // foreach (GameObject enemy in enemyPool.getObjectPool())
-    //     // {
-    //     //     if (!enemy.activeInHierarchy)
-    //     //     {
-    //     //         continue;
-    //     //     }
-
-    //     //     //Calculate distance between player and enemy
-
-    //     //     float distance = Vector3.Distance(transform.position, enemy.transform.position);
-
-    //     //     if (distance < detectionRangeThreshold)
-    //     //     {
-    //     //         if (currentTargetEnemy == null || distance < Vector3.Distance(transform.position, currentTargetEnemy.transform.position))
-    //     //         {
-    //     //             currentTargetEnemy = enemy;
-    //     //             break;
-    //     //         }
-    //     //     }
-    //     // }
-
-    //     // //check if current enemy is in range
-    //     // if (currentTargetEnemy != null)
-    //     // {
-    //     //     float distance = Vector3.Distance(transform.position, currentTargetEnemy.transform.position);
-    //     //     if (distance < detectionRangeThreshold)
-    //     //     {
-    //     //         // Reset enemy detection timer
-    //     //         enemyDetectionTimer = 0f;
-    //     //         isEnemyInRange = true;
-    //     //     }
-    //     // }
-    //     // else
-    //     // {
-    //     //     // Increment enemy detection timer
-    //     //     enemyDetectionTimer += Time.deltaTime;
-
-    //     //     // Check if enemy is out of range for too long
-
-    //     //     if (enemyDetectionTimer > enemyOutOfRangeThreshold)
-    //     //     {
-    //     //         // // Find next closest enemy
-    //     //         currentTargetEnemy = GetNextClosestEnemy();
-    //     //         enemyDetectionTimer = 0f;
-    //     //     }
-    //     // }
-    //     // //Create fireball towwards current target enemy
-    // }
-
-    // private GameObject GetNextClosestEnemy()
-    // {
-    //     GameObject nextClosestEnemy = null;
-    //     float closestDistance = Mathf.Infinity;
-
-    //     foreach (GameObject enemy in enemyPool.getObjectPool())
-    //     {
-
-    //         // Exclude the current target enemy OR enemy not active in hierarchy
-    //         if (enemy == currentTargetEnemy || !enemy.activeInHierarchy)
-    //             continue;
-
-    //         float distance = Vector3.Distance(transform.position, enemy.transform.position);
-
-    //         if (distance < closestDistance)
-    //         {
-    //             closestDistance = distance;
-    //             nextClosestEnemy = enemy;
-    //         }
-    //     }
-
-    //     return nextClosestEnemy;
-    // }
-    
-    // // public void setCurrentTarget(GameObject target)
-    // // {
-    // //     this.currentTarget = target;
-    // // }
-    // public GameObject getCurrentTarget()
-    // {
-    //     return currentTargetEnemy;
-    // }
-    // public float getDetectionDistance()
-    // {
-    //     return detectionRangeThreshold;
-    // }
-    // public void setDetectionTimer(float time)
-    // {
-    //     enemyDetectionTimer = time;
-    // }
-    // public void setIsEnemyInRange(bool inrange)
-    // {
-    //     isEnemyInRange = inrange;
-    // }
-   
+        //no close enemy detected
+        if (closestEnemy_ == null)
+        {
+            // loop through pool of spawned enemies and detect the nearest enemy
+            foreach (GameObject enemy in ObjectPoolManager.instance.getEnemyPool())
+            {
+                float distanceBetween_ = Vector3.Distance(this.transform.position, enemy.transform.position);
+                if (distanceBetween_ <= detectionRange_)
+                {
+                    // Debug.Log("Found closest enemy:" + enemy);
+                    setClosestEnemy(enemy);
+                    break;
+                }
+            }
+        }
 
 
+        // already spotted a nearby enemy
+        if (closestEnemy_ != null)
+        {
+            float distanceBetween_ = Vector3.Distance(closestEnemy_.transform.position, this.gameObject.transform.position);
+            Debug.Log("Distance between player and enemy: " + distanceBetween_);
+
+            // make sure current closest enemy is in range
+            if (distanceBetween_ > detectionRange_)
+            {
+                startWaitToDetectClosestEnemyTimer();
+            }
+            else
+            {
+                //if player is in range, just reset the timer
+                cancelWaitToDetectClosestEnemyTimer();
+            }
+        }
+
+    }
+
+    public void startWaitToDetectClosestEnemyTimer()
+    {
+        // Debug.Log("Detected! " + closestEnemy_);
+        waitToDetectClosestEnemyTimer_ += Time.deltaTime;
+    }
+    public void cancelWaitToDetectClosestEnemyTimer()
+    {
+        waitToDetectClosestEnemyTimer_ = 0;
+        // Debug.Log("Wait Timer Reset: " + waitToDetectClosestEnemyTimer_);
+
+    }
+    public void setClosestEnemy(GameObject close_)
+    {
+        closestEnemy_ = close_;
+    }
+    public void handleDoneWaitingToDetectClosestEnemyEvent()
+    {
+        if (waitToDetectClosestEnemyTimer_ > waitToDetectClosestEnemyTimeout_)
+        {
+            setClosestEnemy(null);
+        }
+    }
+    public GameObject getClosestEnemy()
+    {
+        return closestEnemy_;
+    }
 }
