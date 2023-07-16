@@ -12,11 +12,9 @@ public class TargetSystem : MonoBehaviour
     public float waitToDetectClosestEnemyTimeout_;
     GameObject closestEnemy_;
     public static List<GameObject> enemyList = new List<GameObject>();
+    public static List<GameObject> projectiles = new List<GameObject>();
 
-    public static List<GameObject> GetEnemyList()
-    {
-        return enemyList;
-    }
+
     void Start()
     {
         closestEnemy_ = null;
@@ -38,7 +36,11 @@ public class TargetSystem : MonoBehaviour
             {
                 setClosestEnemy(null);
             }
-            Debug.DrawLine(this.transform.position, closestEnemy_.transform.position, Color.green);
+            else
+            {
+                Debug.DrawLine(this.transform.position, closestEnemy_.transform.position, Color.green);
+
+            }
         }
 
     }
@@ -47,18 +49,21 @@ public class TargetSystem : MonoBehaviour
         //if closest enemy not found or is dead, search for next
         if (closestEnemy_ == null)
         {
-            foreach (GameObject enemy in enemyList)
+            for (int i = 0; i < TargetSystem.GetEnemyList().Count; i++)
             {
-                if (Vector3.Distance(transform.position, enemy.transform.position) < detectionRange_)
+                GameObject enemy = TargetSystem.GetEnemyList()[i];
+                if (enemy != null)
                 {
-                    //Enemy within range
-                    setClosestEnemy(enemy);
-                    break;
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < detectionRange_)
+                    {
+                        //Enemy within range
+                        setClosestEnemy(enemy);
+                        break;
+                    }
                 }
             }
 
         }
-        //if closest enemy found and not dead, check current closest enemy's distance
         if (closestEnemy_ != null)
         {
             //calculate distance between player and current closest enemy
@@ -71,58 +76,6 @@ public class TargetSystem : MonoBehaviour
                 startWaitToDetectClosestEnemyTimer();
             }
         }
-
-        // foreach (GameObject enemy in ObjectPoolManager.instance.getEnemyPool())
-        // {
-        //     if (!enemy.activeInHierarchy)
-        //     {
-        //         continue;
-        //     }
-        //     else
-        //     {
-        //         if (Vector3.Distance(transform.position, enemy.transform.position) < detectionRange_)
-        //         {
-        //             setClosestEnemy(enemy);
-        //         }
-        //     }
-        // }
-        // //no close enemy detected
-        // if (closestEnemy_ == null)
-        // {
-        //     // loop through pool of spawned enemies and detect the nearest enemy
-        //     foreach (GameObject enemy in ObjectPoolManager.instance.getEnemyPool())
-        //     {
-        //         float distanceBetween_ = Vector3.Distance(this.transform.position, enemy.transform.position);
-        //         if (distanceBetween_ <= detectionRange_)
-        //         {
-        //             // Debug.Log("Found closest enemy:" + enemy);
-        //             setClosestEnemy(enemy);
-        //             break;
-        //         }
-        //     }
-        // }
-
-
-        // // already spotted a nearby enemy
-        // if (closestEnemy_ != null)
-        // {
-        //     float distanceBetween_ = Vector3.Distance(closestEnemy_.transform.position, this.gameObject.transform.position);
-        //     // Debug.Log("Distance between player and enemy: " + distanceBetween_);
-
-        //     // make sure current closest enemy is in range
-        //     if (distanceBetween_ > detectionRange_)
-        //     {
-        //         startWaitToDetectClosestEnemyTimer();
-        //     }
-        //     else
-        //     {
-        //         //if player is in range, just reset the timer
-        //         cancelWaitToDetectClosestEnemyTimer();
-        //     }
-        // }
-
-        // handleDoneWaitingToDetectClosestEnemyEvent();
-
 
     }
 
@@ -153,5 +106,14 @@ public class TargetSystem : MonoBehaviour
     public GameObject getClosestEnemy()
     {
         return closestEnemy_;
+    }
+
+    public static List<GameObject> GetEnemyList()
+    {
+        return enemyList;
+    }
+    public static List<GameObject> GetProjectileList()
+    {
+        return projectiles;
     }
 }

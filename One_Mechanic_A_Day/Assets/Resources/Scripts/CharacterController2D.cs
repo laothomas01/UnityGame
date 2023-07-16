@@ -19,7 +19,7 @@ public class CharacterController2D : MonoBehaviour
    [SerializeField] private Rigidbody2D rb;
    Vector3 direction;
 
-   private float testAttackTimer = 0f;
+   [SerializeField] private float testAttackTimer = 0f;
    public float testAttackTimeThreshold;
    private TargetSystem targetSystem;
    public bool DEBUG;
@@ -31,7 +31,7 @@ public class CharacterController2D : MonoBehaviour
    }
    void Update()
    {
-
+      Attack();
       HandleUserInput();
       HandleMoveAnimations();
       Flip();
@@ -43,31 +43,34 @@ public class CharacterController2D : MonoBehaviour
       moveHorizontal = Input.GetAxisRaw("Horizontal");
       moveVertical = Input.GetAxisRaw("Vertical");
       direction.Set(moveHorizontal, moveVertical, 0);
+      direction.Normalize();
    }
 
    private void Attack()
    {
 
       //note: we will use instantiation instead for now
-
-
+      GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
       if (testAttackTimer > testAttackTimeThreshold)
       {
          testAttackTimer = 0;
-         // GameObject bullet = GameObject.Find("flame_horizontal_0");
-         // if (bullet != null)
-         // {
-
-         //@TODO change to object pool
-         // if (targetSystem.getClosestEnemy() != null)
-         // {
-         testBulletPrefab.transform.position = this.transform.position;
-         //    Vector3 direction = targetSystem.getClosestEnemy().transform.position - this.transform.position;
-         testBulletPrefab.GetComponent<BulletController2D>().setDirection(1, 1);
-         testBulletPrefab.GetComponent<BulletController2D>().setSpeed(100);
-         //    float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-         //    testBulletPrefab.GetComponent<BulletController2D>().setRotation(0, 0, rotation);
-         Instantiate(testBulletPrefab);
+         if (bullet != null && targetSystem.getClosestEnemy() != null)
+         {
+            // Debug.Log("Shoot");  
+            BulletController2D bulletController2D = bullet.GetComponent<BulletController2D>();
+            bulletController2D.setPosition(this.transform.position);
+            Vector3 direction = targetSystem.getClosestEnemy().transform.position - this.transform.position;
+            direction.Normalize();
+            bulletController2D.setDirection(direction);
+            float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+            bulletController2D.setRotation(0, 0, rotation);
+            bullet.SetActive(true);
+         }
+         // testAttackTimer = 0;
+         // testBulletPrefab.transform.position = this.transform.position;
+         // testBulletPrefab.GetComponent<BulletController2D>().setDirection(1, 1);
+         // testBulletPrefab.GetComponent<BulletController2D>().setSpeed(100);
+         // Instantiate(testBulletPrefab);
          // }
       }
 

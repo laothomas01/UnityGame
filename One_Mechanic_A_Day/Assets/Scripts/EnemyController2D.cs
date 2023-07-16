@@ -33,10 +33,13 @@ public class EnemyController2D : MonoBehaviour
     Vector3 direction;
 
     bool isDead_;
-    private void Awake()
+     void Awake()
     {
         isDead_ = false;
         TargetSystem.GetEnemyList().Add(this.gameObject);
+        maxMoveSpeed = UnityEngine.Random.Range(50, 150);
+        state = enemyState.moving;
+
 
     }
 
@@ -44,8 +47,6 @@ public class EnemyController2D : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        maxMoveSpeed = UnityEngine.Random.Range(90, 200);
-        state = enemyState.moving;
 
     }
 
@@ -76,6 +77,8 @@ public class EnemyController2D : MonoBehaviour
         }
         //=======================================================================================
         
+
+        //will this cause problems? 
         if(isDead_)
         {
             TargetSystem.GetEnemyList().Remove(this.gameObject);

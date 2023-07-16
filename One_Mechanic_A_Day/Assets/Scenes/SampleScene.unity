@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186a6dc75f55414b9df756039de2ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletAmountToPool: 0
-  enemyAmountToPool: 100
+  bulletAmountToPool: 50
+  enemyAmountToPool: 50
   bulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
   enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
 --- !u!212 &1522600702707065427
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 100
   rb: {fileID: 2419274927620796679}
+  testAttackTimer: 0
   testAttackTimeThreshold: 1.5
   DEBUG: 0
   testBulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
@@ -457,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange_: 3
+  waitToDetectClosestEnemyTimer_: 0
   waitToDetectClosestEnemyTimeout_: 1
 --- !u!1 &8766388487797195449
 GameObject:
