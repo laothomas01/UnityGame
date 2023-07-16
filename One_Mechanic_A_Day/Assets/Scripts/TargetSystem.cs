@@ -64,7 +64,7 @@ public class TargetSystem : MonoBehaviour
             }
 
         }
-        if (closestEnemy_ != null)
+        if(closestEnemy_ != null)
         {
             //calculate distance between player and current closest enemy
             if (Vector3.Distance(transform.position, closestEnemy_.transform.position) < detectionRange_)

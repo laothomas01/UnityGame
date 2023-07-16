@@ -7,12 +7,13 @@ public class BulletController2D : MonoBehaviour
 {
 
     private Rigidbody2D rb;
+
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Vector3 direction;
     // Start is called before the first frame update
 
     public float animationDuration = 2f;
-    private float lifeSpan;
+    [SerializeField] private float lifeSpan;
     public float lifeSpanThreshold;
     //handling overlapping collider detection
 
@@ -26,45 +27,36 @@ public class BulletController2D : MonoBehaviour
     }
     void Update()
     {
-        if (lifeSpan > lifeSpanThreshold)
-        {
-            lifeSpan = 0;
-            TargetSystem.GetProjectileList().Remove(this.gameObject);
-            setObjectActive(false);
-        }
-        else
-        {
-            lifeSpan += Time.deltaTime;
-        }
+        handleLifeSpan();
         rb.velocity = direction * bulletSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // if (other.CompareTag("Enemy"))
-        // {
-        //     //useful for handling explosions or corpse explosion
-        //     Collider2D[] overlappingColliders = new Collider2D[1];
-        //     //filter type of collider to use
-        //     ContactFilter2D filter = new ContactFilter2D();
-        //     filter.useTriggers = true;
-        //     int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
-        //     for (int i = 0; i < numColliders; i++)
-        //     {
-        //         if (overlappingColliders[i].CompareTag("Enemy"))
-        //         {
-        //             // Handle the collision with the enemy
+        if (other.CompareTag("Enemy"))
+        {
+            //useful for handling explosions or corpse explosion
+            Collider2D[] overlappingColliders = new Collider2D[1];
+            //filter type of collider to use
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.useTriggers = true;
+            int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
+            for (int i = 0; i < numColliders; i++)
+            {
+                if (overlappingColliders[i].CompareTag("Enemy"))
+                {
+                    // Handle the collision with the enemy
 
-        //             // Deactivate the enemy
-        //             overlappingColliders[i].gameObject.GetComponent<EnemyController2D>().setIsDead(true);
-        //             // Break out of the loop after deactivating the first enemy hit
-        //             // Destroy(this.gameObject);
-        //             setObjectActive(false);
+                    // Deactivate the enemy
+                    
+                    // Break out of the loop after deactivating the first enemy hit
+                    // TargetSystem.GetProjectileList().Remove(this.gameObject);
+                    setObjectActive(false);
 
-        //             break;
-        //         }
-        //     }
-        // }
+                    break;
+                }
+            }
+        }
 
     }
 
@@ -113,5 +105,14 @@ public class BulletController2D : MonoBehaviour
         transform.rotation = Quaternion.Euler(xrot, yrot, zrot);
     }
 
+    public void handleLifeSpan()
+    {
+        if (lifeSpan > lifeSpanThreshold)
+        {
+            TargetSystem.GetProjectileList().Remove(this.gameObject);
+            setObjectActive(false);
+        }
+        lifeSpan += Time.deltaTime;
+    }
 
 }

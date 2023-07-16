@@ -100,10 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e634f77c8a8ae4f8fd24c0b66176e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 150
+  bulletSpeed: 300
   direction: {x: 1, y: 1, z: 0}
   animationDuration: 2
-  lifeSpanThreshold: 3
+  lifeSpanThreshold: 5
 --- !u!50 &1015235556427062433
 Rigidbody2D:
   serializedVersion: 4

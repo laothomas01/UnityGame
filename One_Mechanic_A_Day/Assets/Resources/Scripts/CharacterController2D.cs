@@ -31,7 +31,7 @@ public class CharacterController2D : MonoBehaviour
    }
    void Update()
    {
-      Attack();
+      // Attack();
       HandleUserInput();
       HandleMoveAnimations();
       Flip();
@@ -46,6 +46,8 @@ public class CharacterController2D : MonoBehaviour
       direction.Normalize();
    }
 
+
+//@TODO instead of using an actual projectile to hit enemies, use a ray cast and put an animation over it. 
    private void Attack()
    {
 
@@ -66,44 +68,8 @@ public class CharacterController2D : MonoBehaviour
             bulletController2D.setRotation(0, 0, rotation);
             bullet.SetActive(true);
          }
-         // testAttackTimer = 0;
-         // testBulletPrefab.transform.position = this.transform.position;
-         // testBulletPrefab.GetComponent<BulletController2D>().setDirection(1, 1);
-         // testBulletPrefab.GetComponent<BulletController2D>().setSpeed(100);
-         // Instantiate(testBulletPrefab);
-         // }
       }
 
-
-      // if (testBulletPrefab != null && targetSystem.getClosestEnemy() != null)
-      // {
-      //    testBulletPrefab.transform.position = this.transform.position;
-      //    // testBulletPrefab.GetComponent<BulletController2D>().setPosition(this.transform.position);
-      //    // Vector3 direction = targetSystem.getClosestEnemy().transform.position - this.transform.position;
-      //    // direction.Normalize();
-      //    testBulletPrefab.GetComponent<BulletController2D>().setDirection(1,1);
-      //    testBulletPrefab.GetComponent<BulletController2D>().setSpeed(100);
-      //    // Debug.Log("Direction:" + testBulletPrefab.GetComponent<BulletController2D>().getDirection());
-      //    // Debug.Log("Speed:" + testBulletPrefab.GetComponent<BulletController2D>().getBulletSpeed());
-
-      //    // testBulletPrefab.GetComponent<Rigidbody2D>().velocity = new Vector3(1,1,0) * 10 * Time.deltaTime;
-      //    Instantiate(testBulletPrefab);
-      // }
-      // }
-      //    GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
-      //    if (bullet != null)
-      //    {
-      //       Vector3 direction;
-      //       if (targetSystem.getClosestEnemy() != null)
-      //       {
-      //          bullet.SetActive(true);
-      //          bullet.transform.position = this.transform.position;
-      //          direction = targetSystem.getClosestEnemy().transform.position - this.transform.position;
-      //          float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-      //          bullet.GetComponent<BulletController2D>().setDirection(direction);
-      //          bullet.GetComponent<BulletController2D>().setPosition(this.transform.position);
-      //          bullet.GetComponent<BulletController2D>().setRotation(0, 0, rotation);
-      // }
 
       testAttackTimer += Time.deltaTime;
 

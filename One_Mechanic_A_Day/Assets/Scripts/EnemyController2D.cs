@@ -32,15 +32,16 @@ public class EnemyController2D : MonoBehaviour
 
     Vector3 direction;
 
-    bool isDead_;
-     void Awake()
+    public float testLifeSpan;
+    public float testLifeSpanMax;
+
+    [SerializeField] bool isDead_;
+    void Awake()
     {
-        isDead_ = false;
+        // setIsDead(false);
         TargetSystem.GetEnemyList().Add(this.gameObject);
-        maxMoveSpeed = UnityEngine.Random.Range(50, 150);
+        maxMoveSpeed = UnityEngine.Random.Range(100, 150);
         state = enemyState.moving;
-
-
     }
 
     void Start()
@@ -53,7 +54,7 @@ public class EnemyController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+
         //==================== handle enemy movement state ================================
         float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
 
@@ -76,14 +77,14 @@ public class EnemyController2D : MonoBehaviour
             ChasePlayer(player);
         }
         //=======================================================================================
-        
 
-        //will this cause problems? 
-        if(isDead_)
+        if (testLifeSpan > testLifeSpanMax)
         {
             TargetSystem.GetEnemyList().Remove(this.gameObject);
+
             setObjectActive(false);
         }
+        testLifeSpan += Time.deltaTime;
         rb.velocity = direction * maxMoveSpeed * Time.deltaTime;
 
         Flip();
