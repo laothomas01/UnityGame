@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4763050212414196750}
   - component: {fileID: 1015235556427062433}
   - component: {fileID: 898239286316020935}
-  - component: {fileID: -5404638509540839362}
+  - component: {fileID: 4000143323494364910}
   m_Layer: 0
   m_Name: flame_horizontal_0
   m_TagString: Projectile
@@ -28,8 +28,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989901727591452983}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.41, y: 1.77, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.0524617, w: 0.99862295}
+  m_LocalPosition: {x: -1.6100025, y: -1.1099992, z: 0.014116665}
   m_LocalScale: {x: -1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 100
+  direction: {x: 1, y: 1, z: 0}
   animationDuration: 2
   lifeSpanThreshold: 3
 --- !u!50 &1015235556427062433
@@ -128,7 +129,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!95 &898239286316020935
 Animator:
@@ -151,8 +152,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &-5404638509540839362
-CircleCollider2D:
+--- !u!61 &4000143323494364910
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -180,9 +181,19 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.08, y: 0.06}
+    newSize: {x: 0.08, y: 0.06}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.04
+  m_Size: {x: 0.08, y: 0.06}
+  m_EdgeRadius: 0

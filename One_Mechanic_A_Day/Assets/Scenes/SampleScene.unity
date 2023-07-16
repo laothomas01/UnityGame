@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1545737787091472042}
-  enemySpawnTimeThreshold: 2
+  enemySpawnTimeThreshold: 1
 --- !u!1 &1502049728
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186a6dc75f55414b9df756039de2ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletAmountToPool: 10
-  enemyAmountToPool: 1
+  bulletAmountToPool: 0
+  enemyAmountToPool: 100
   bulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
   enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
 --- !u!212 &1522600702707065427
@@ -439,10 +439,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25319051268645e4e99581df6b4681a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 300
+  moveSpeed: 100
   rb: {fileID: 2419274927620796679}
-  testAttackTimeThreshold: 0.23
-  DEBUG: 1
+  testAttackTimeThreshold: 1.5
+  DEBUG: 0
+  testBulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
 --- !u!114 &8652251879329482858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,8 +456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fb0efb43f9bf848bf79495c5ba8d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange_: 2
-  waitToDetectClosestEnemyTimeout_: 3
+  detectionRange_: 3
+  waitToDetectClosestEnemyTimeout_: 1
 --- !u!1 &8766388487797195449
 GameObject:
   m_ObjectHideFlags: 0

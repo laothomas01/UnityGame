@@ -8,13 +8,12 @@ public class BulletController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     [SerializeField] private float bulletSpeed;
-    private Vector3 direction;
+    [SerializeField] private Vector3 direction;
     // Start is called before the first frame update
 
     public float animationDuration = 2f;
     private float lifeSpan;
     public float lifeSpanThreshold;
-
     //handling overlapping collider detection
 
     void Start()
@@ -23,19 +22,18 @@ public class BulletController2D : MonoBehaviour
     }
     void Update()
     {
-        if (lifeSpan > lifeSpanThreshold)
-        {
-            lifeSpan = 0;
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            lifeSpan += Time.deltaTime;
-        }
+        // if (lifeSpan > lifeSpanThreshold)
+        // {
+        //     lifeSpan = 0;
+        //     this.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     lifeSpan += Time.deltaTime;
+        // }
         rb.velocity = direction * bulletSpeed * Time.deltaTime;
-
+        // rb.velocity = direction * bulletSpeed * Time.deltaTime;
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -43,6 +41,7 @@ public class BulletController2D : MonoBehaviour
         {
             //useful for handling explosions or corpse explosion
             Collider2D[] overlappingColliders = new Collider2D[1];
+            //filter type of collider to use
             ContactFilter2D filter = new ContactFilter2D();
             filter.useTriggers = true;
             int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
@@ -53,12 +52,15 @@ public class BulletController2D : MonoBehaviour
                     // Handle the collision with the enemy
 
                     // Deactivate the enemy
+                    overlappingColliders[i].gameObject.GetComponent<EnemyController2D>().setIsDead(true);
+                    // overlappingColliders[i].gameObject.SetActive(false);
 
-                    overlappingColliders[i].gameObject.SetActive(false);
-
-                    setObjectActive(false);
+                    // setObjectActive(false);
+                    
 
                     // Break out of the loop after deactivating the first enemy hit
+                    Destroy(this.gameObject);
+
                     break;
                 }
             }
