@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &591845404
 Transform:
   m_ObjectHideFlags: 0
@@ -167,8 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de51910f16b86bb4caf7405a546c4554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 1545737787091472042}
-  enemySpawnTimeThreshold: 1
 --- !u!1 &1502049728
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1502049730
 Transform:
   m_ObjectHideFlags: 0
@@ -213,10 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186a6dc75f55414b9df756039de2ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletAmountToPool: 50
-  enemyAmountToPool: 50
-  bulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
-  enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
 --- !u!212 &1522600702707065427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -404,7 +398,6 @@ GameObject:
   - component: {fileID: 2419274927620796679}
   - component: {fileID: 2173759411897101591}
   - component: {fileID: 8652251879329482857}
-  - component: {fileID: 8652251879329482858}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -421,7 +414,7 @@ Transform:
   m_GameObject: {fileID: 7574127931243387176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.41, y: 2.13, z: 0.014116665}
-  m_LocalScale: {x: -2, y: 2, z: 1}
+  m_LocalScale: {x: -5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -436,30 +429,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7574127931243387176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25319051268645e4e99581df6b4681a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d2ce9d7cd026a84e942a05fb3f96f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
-  rb: {fileID: 2419274927620796679}
-  testAttackTimer: 0
-  testAttackTimeThreshold: 1.5
-  DEBUG: 0
-  testBulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
---- !u!114 &8652251879329482858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7574127931243387176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fb0efb43f9bf848bf79495c5ba8d55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange_: 3
-  waitToDetectClosestEnemyTimer_: 0
-  waitToDetectClosestEnemyTimeout_: 1
+  moveSpeed: 300
 --- !u!1 &8766388487797195449
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,10 +461,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8766388487797195449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbef0a6db0cac7748a8b18b233571094, type: 3}
+  m_Script: {fileID: 11500000, guid: 299aede3a4ba33049ac4c706b9233264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8652251879329482856}
-  cameraOffset: {x: 0.5, y: 0.5, z: -1}
-  cameraSpeed: 0.09
-  objectPoolManager: {fileID: 1502049728}
+  playerPrefab: {fileID: 7574127931243387176}
+  offsetPositon: {x: 1, y: 1, z: -1}
+  cameraMoveSpeed: 3

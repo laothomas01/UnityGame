@@ -24,48 +24,48 @@ using UnityEngine;
 public class CameraController2D : MonoBehaviour
 {
 
-    //player is going to be the positional component of your player GameObject.
-    public Transform player;
-    //cameraOffset is going to be the positional offset vector (the distance and angle) between your player and the camera.
-    public Vector3 cameraOffset;
-    // cameraSpeed is going to be the movement speed of the camera.
-    public float cameraSpeed;
-    public GameObject objectPoolManager;
-    // private EnemyPool enemyPool;
-    void Start()
-    {
-        // enemyPool = objectPoolManager.GetComponent<EnemyPool>();
-        transform.position = player.position + cameraOffset;
-    }
-    void Update()
-    {
-    }
-    private void FixedUpdate()
-    {
-        Vector3 finalPosition = player.position + cameraOffset;
-        //Lerp = (final position = (lerpposition - playerposition) * cameraSpeed)
-        Vector3 lerpPosition = Vector3.Lerp(transform.position, finalPosition, cameraSpeed);
-        transform.position = lerpPosition;
-    }
-
-    // private void CheckEnemyVisibileInCamera()
+    // //player is going to be the positional component of your player GameObject.
+    // public Transform player;
+    // //cameraOffset is going to be the positional offset vector (the distance and angle) between your player and the camera.
+    // public Vector3 cameraOffset;
+    // // cameraSpeed is going to be the movement speed of the camera.
+    // public float cameraSpeed;
+    // public GameObject objectPoolManager;
+    // // private EnemyPool enemyPool;
+    // void Start()
     // {
-    //     Plane[] frustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-    //     foreach (GameObject obj in enemyPool.getObjectPool())
-    //     {
-    //         if (obj != null)
-    //         {
-    //             Bounds enemyBounds = obj.GetComponent<SpriteRenderer>().bounds;
-    //             if (GeometryUtility.TestPlanesAABB(frustrumPlanes, enemyBounds))
-    //             {
-    //                 obj.GetComponent<SpriteRenderer>().enabled = true;
-    //             }
-    //             else
-    //             {
-    //                 obj.GetComponent<SpriteRenderer>().enabled = false;
-    //             }
-    //         }
-    //     }
+    //     // enemyPool = objectPoolManager.GetComponent<EnemyPool>();
+    //     transform.position = player.position + cameraOffset;
     // }
+    // void Update()
+    // {
+    // }
+    // private void FixedUpdate()
+    // {
+    //     Vector3 finalPosition = player.position + cameraOffset;
+    //     //Lerp = (final position = (lerpposition - playerposition) * cameraSpeed)
+    //     Vector3 lerpPosition = Vector3.Lerp(transform.position, finalPosition, cameraSpeed);
+    //     transform.position = lerpPosition;
+    // }
+
+    // // private void CheckEnemyVisibileInCamera()
+    // // {
+    // //     Plane[] frustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+    // //     foreach (GameObject obj in enemyPool.getObjectPool())
+    // //     {
+    // //         if (obj != null)
+    // //         {
+    // //             Bounds enemyBounds = obj.GetComponent<SpriteRenderer>().bounds;
+    // //             if (GeometryUtility.TestPlanesAABB(frustrumPlanes, enemyBounds))
+    // //             {
+    // //                 obj.GetComponent<SpriteRenderer>().enabled = true;
+    // //             }
+    // //             else
+    // //             {
+    // //                 obj.GetComponent<SpriteRenderer>().enabled = false;
+    // //             }
+    // //         }
+    // //     }
+    // // }
 
 }

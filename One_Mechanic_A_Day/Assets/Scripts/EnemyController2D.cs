@@ -9,90 +9,32 @@ using UnityEngine.UIElements;
 public class EnemyController2D : MonoBehaviour
 {
 
-    enum enemyState
-    {
-        moving,
-        idle
-    }
-
-    //movement direction 
+    [SerializeField] Vector3 direction;
+    [SerializeField] private float moveSpeed;        
     private float horizontal;
     private float vertical;
-    //flipping horizontal transform
-    private bool isFacingRight = false;
-    //physics component
-    [SerializeField] private Rigidbody2D rb;
-
-    //target to follow
+    Rigidbody2D rb2D;
+    bool isFacingRight = false;
     private GameObject player;
-
-    public float maxMoveSpeed;
-
-    enemyState state;
-
-    Vector3 direction;
-
-    public float testLifeSpan;
-    public float testLifeSpanMax;
-
-    [SerializeField] bool isDead_;
-    void Awake()
-    {
-        // setIsDead(false);
-        TargetSystem.GetEnemyList().Add(this.gameObject);
-        maxMoveSpeed = UnityEngine.Random.Range(100, 150);
-        state = enemyState.moving;
-    }
-
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
-
+        player = GameObject.Find("Player");
+        rb2D = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
     void Update()
     {
 
-        //==================== handle enemy movement state ================================
-        float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
-
-        if (Mathf.RoundToInt(distanceBetweenPlayer) == 0)
-        {
-            state = enemyState.idle;
-        }
-        else
-        {
-            state = enemyState.moving;
-        }
-
-        if (state == enemyState.idle)
-        {
-            direction.Set(0, 0, 0);
-            gameObject.GetComponent<Animator>().Play("Enemy_Idle_Anim");
-        }
-        else
-        {
-            ChasePlayer(player);
-        }
-        //=======================================================================================
-
-        if (testLifeSpan > testLifeSpanMax)
-        {
-            TargetSystem.GetEnemyList().Remove(this.gameObject);
-
-            setObjectActive(false);
-        }
-        testLifeSpan += Time.deltaTime;
-        rb.velocity = direction * maxMoveSpeed * Time.deltaTime;
-
+        HandleMovementBehavior();
+        HandleMoveAnimations();
+      
+        Move(Time.deltaTime);
         Flip();
     }
     void FixedUpdate()
     {
-        // ChasePlayer(player);
+
     }
+
     private void ChasePlayer(GameObject player)
     {
 
@@ -104,8 +46,45 @@ public class EnemyController2D : MonoBehaviour
 
         direction.Set(horizontal, vertical, 0);
 
-        gameObject.GetComponent<Animator>().Play("Enemy_Running_Anim");
 
+    }
+    private void HandleMovementBehavior()
+    {
+       float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
+        if (Mathf.RoundToInt(distanceBetweenPlayer) == 0)
+        {
+            Stop();
+        }
+        else
+        {
+            ChasePlayer(player);
+
+        }
+
+    }
+    private void Move(float dt)
+    {
+        rb2D.velocity = direction * moveSpeed * dt;
+    }
+    private void Stop()
+    {
+      direction.Set(0,0,0);
+
+    }
+
+    private void HandleMoveAnimations()
+    {
+        if (direction.x != 0 || direction.y != 0)
+        {
+
+            gameObject.GetComponent<Animator>().Play("Enemy_Running_Anim");
+
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().Play("Enemy_Idle_Anim");
+
+        }
     }
     private void Flip()
     {
@@ -116,23 +95,6 @@ public class EnemyController2D : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
-    }
-    public void setPosition(Vector3 position)
-    {
-        transform.position = position;
-    }
-    public void setObjectActive(bool active)
-    {
-        this.gameObject.SetActive(active);
-    }
-
-    public void setIsDead(bool dead)
-    {
-        isDead_ = dead;
-    }
-    public bool isDead()
-    {
-        return isDead_;
     }
 
 }

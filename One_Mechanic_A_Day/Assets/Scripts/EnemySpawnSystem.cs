@@ -8,43 +8,26 @@ public class EnemySpawnSystem : MonoBehaviour
 {
     [SerializeField] Camera MainCamera;
     [SerializeField] private float enemySpawnTimer;
-    [SerializeField] private float enemySpawnTimeThreshold = 2f;
+    [SerializeField] private float maxEnemySpawnCooldown;
     private float spawnDistance = 10f;
+    [SerializeField] private GameObject enemyPrefab;
 
     void Update()
     {
-        if (enemySpawnTimer > enemySpawnTimeThreshold)
+
+        enemySpawnTimer += Time.deltaTime;
+        if (enemySpawnTimer >= maxEnemySpawnCooldown)
         {
+            enemyPrefab.transform.position = spawnAroundCamera(MainCamera);
+            GameObject enemy = Instantiate(enemyPrefab);
+
+            //each enemy spawn, add the spawned enemy to a list
+            EntityManager.getEnemyList().Add(enemy);
             enemySpawnTimer = 0;
-            spawnEnemies();
-        }
-        else
-        {
-            enemySpawnTimer += Time.deltaTime;
         }
     }
 
-    private void spawnEnemies()
-    {
-
-        GameObject enemy = ObjectPoolManager.instance.GetPooledEnemyObject();
-        EnemyController2D enemyController2D = enemy.GetComponent<EnemyController2D>();
-        enemyController2D.setObjectActive(true);
-        // if (enemy != null)
-        // {
-        Vector3 spawnPosition = GetRandomSpawnPosition(MainCamera);
-        enemyController2D.setPosition(spawnPosition);
-        // }
-        // else
-        // {
-
-        // }
-
-        Debug.Log(enemy.active);
-
-    }
-
-    private Vector3 GetRandomSpawnPosition(Camera camera)
+    private Vector3 spawnAroundCamera(Camera camera)
     {
         Vector3 cameraPosition = camera.transform.position;
         Vector3 randomDirection = Random.insideUnitCircle.normalized;
