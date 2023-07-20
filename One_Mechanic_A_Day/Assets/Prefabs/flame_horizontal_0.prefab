@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 618886120258852604}
   - component: {fileID: 151683055199833625}
-  - component: {fileID: 4763050212414196750}
   - component: {fileID: 1015235556427062433}
   - component: {fileID: 898239286316020935}
   - component: {fileID: 4000143323494364910}
+  - component: {fileID: 2941142066812319392}
   m_Layer: 0
   m_Name: flame_horizontal_0
   m_TagString: Projectile
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989901727591452983}
   m_LocalRotation: {x: 0, y: 0, z: -0.0524617, w: 0.99862295}
-  m_LocalPosition: {x: -1.6100025, y: -1.1099992, z: 0.014116665}
+  m_LocalPosition: {x: 2.1323752, y: 1.7850515, z: 0.014116665}
   m_LocalScale: {x: -1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,22 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4763050212414196750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8989901727591452983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4e634f77c8a8ae4f8fd24c0b66176e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 300
-  direction: {x: 1, y: 1, z: 0}
-  animationDuration: 2
-  lifeSpanThreshold: 5
 --- !u!50 &1015235556427062433
 Rigidbody2D:
   serializedVersion: 4
@@ -197,3 +181,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.08, y: 0.06}
   m_EdgeRadius: 0
+--- !u!114 &2941142066812319392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989901727591452983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bf73c32a476c64fa42606cdb8cff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0.00013001362, y: 1, z: 0}
+  moveSpeed: 300

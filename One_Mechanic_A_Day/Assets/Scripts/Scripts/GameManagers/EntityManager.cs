@@ -6,6 +6,7 @@ public class EntityManager : MonoBehaviour
 {
     [SerializeField]
     static List<GameObject> enemyList;
+    static List<GameObject> bulletList;
     public static EntityManager instance;
     void Start()
     {
@@ -21,6 +22,10 @@ public class EntityManager : MonoBehaviour
 
     }
     public static List<GameObject> getEnemyList()
+    {
+        return enemyList;
+    }
+       public static List<GameObject> getBulletList()
     {
         return enemyList;
     }

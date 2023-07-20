@@ -13,13 +13,38 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed;
     Rigidbody2D rb2D;
     bool isFacingRight = false;
+    TargettingSystem targetSystem;
+    public GameObject testBulletPrefab;
+
+    public float maxAttackCooldown;
+    private float currentAttackCooldown;
     void Start()
     {
+        currentAttackCooldown = maxAttackCooldown;
         rb2D = GetComponent<Rigidbody2D>();
+        targetSystem = GetComponent<TargettingSystem>();
     }
 
     void Update()
     {
+        // // will be testing basic projectile launching
+        if (maxAttackCooldown < 0)
+        {
+            // if(targetSystem.getCurrentTarget() != null)
+            // {
+            //     Attack(targetSystem.getCurrentTarget());
+            //     // Debug.Log("Attack");
+            // }
+            maxAttackCooldown = currentAttackCooldown;
+
+            Attack(targetSystem.getCurrentTarget());
+        }
+        else
+        {
+            maxAttackCooldown -= Time.deltaTime;
+        }
+
+
         Move(Time.deltaTime);
         Flip();
     }
@@ -53,4 +78,20 @@ public class Player : MonoBehaviour
 
         }
     }
+    public void Attack(GameObject target)
+    {
+        if (target != null)
+        {
+            testBulletPrefab.transform.position = this.transform.position;
+            float moveDirectionAngle = Mathf.Atan2(target.transform.position.y - this.transform.position.y,
+            target.transform.position.x - this.transform.position.x);
+            testBulletPrefab.GetComponent<Bullet>().setDirection(new Vector3(Mathf.Cos(moveDirectionAngle),Mathf.Sin(moveDirectionAngle),0));
+            Instantiate(testBulletPrefab);
+        }
+        // testBulletPrefab.transform.position = this.transform.position;
+
+        // Instantiate(testBulletPrefab);
+    }
+
+
 }

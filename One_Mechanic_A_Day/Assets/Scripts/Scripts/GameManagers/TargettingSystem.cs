@@ -8,10 +8,6 @@ public class TargettingSystem : MonoBehaviour
     public float detectRange = 0;
     public float chooseNextTargetTime = 0;
     public float chooseNextTargetDeadline;
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -37,7 +33,7 @@ public class TargettingSystem : MonoBehaviour
                 startChooseNextTargetTimer(Time.deltaTime);
             }
             Debug.DrawLine(this.transform.position, currentTarget.transform.position, Color.green);
-        handleChooseNextTargetEvent();
+            handleChooseNextTargetEvent();
 
 
         }
@@ -48,9 +44,13 @@ public class TargettingSystem : MonoBehaviour
     {
         currentTarget = target;
     }
-    GameObject getCurrentTarget()
+    public GameObject getCurrentTarget()
     {
-        return currentTarget;
+        if (currentTarget != null)
+        {
+            return currentTarget;
+        }
+        return null;
     }
     void findTarget()
     {
