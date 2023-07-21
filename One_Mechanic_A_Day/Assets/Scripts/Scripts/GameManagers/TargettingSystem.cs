@@ -25,6 +25,7 @@ public class TargettingSystem : MonoBehaviour
             if (distance < detectRange)
             {
                 cancelChooseNextTargetTimer();
+                setCurrentTarget(currentTarget);
             }
             else
             {

@@ -17,25 +17,14 @@ public class EnemyController2D : MonoBehaviour
     bool isFacingRight = false;
     private GameObject player;
 
-    public float testLifeSpan;
-    public float currentTestLifeSpan;
     void Start()
     {
         this.gameObject.SetActive(false);
-        currentTestLifeSpan = testLifeSpan;
         player = GameObject.Find("Player");
         rb2D = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        if (testLifeSpan < 0)
-        {
-            testLifeSpan = currentTestLifeSpan;
-            this.gameObject.SetActive(false);
-        }
-
-        testLifeSpan -= Time.deltaTime;
-
         HandleMovementBehavior();
         HandleMoveAnimations();
 

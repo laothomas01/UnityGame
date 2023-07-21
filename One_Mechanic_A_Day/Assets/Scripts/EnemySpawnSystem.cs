@@ -11,19 +11,20 @@ public class EnemySpawnSystem : MonoBehaviour
     {
 
 
-        enemySpawnTimer += Time.deltaTime;
 
         if (enemySpawnTimer > maxEnemySpawnCooldown)
         {
             enemySpawnTimer = 0;
 
             enemy = ObjectPoolManager.instance.GetPooledEnemyObject();
-            if (enemy != null)
-            {
-                enemy.transform.position = spawnAroundCamera(MainCamera);
-                EntityManager.getEnemyList().Add(enemy);
-                enemy.SetActive(true);
-            }
+            enemy.transform.position = spawnAroundCamera(MainCamera);
+            EntityManager.getEnemyList().Add(enemy);
+            enemy.SetActive(true);
+        }
+        else
+
+        {
+            enemySpawnTimer += Time.deltaTime;
 
         }
 
