@@ -10,23 +10,35 @@ public class EnemyController2D : MonoBehaviour
 {
 
     [SerializeField] Vector3 direction;
-    [SerializeField] private float moveSpeed;        
+    [SerializeField] private float moveSpeed;
     private float horizontal;
     private float vertical;
     Rigidbody2D rb2D;
     bool isFacingRight = false;
     private GameObject player;
+
+    public float testLifeSpan;
+    public float currentTestLifeSpan;
     void Start()
     {
+        this.gameObject.SetActive(false);
+        currentTestLifeSpan = testLifeSpan;
         player = GameObject.Find("Player");
         rb2D = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
+        if (testLifeSpan < 0)
+        {
+            testLifeSpan = currentTestLifeSpan;
+            this.gameObject.SetActive(false);
+        }
+
+        testLifeSpan -= Time.deltaTime;
 
         HandleMovementBehavior();
         HandleMoveAnimations();
-      
+
         Move(Time.deltaTime);
         Flip();
     }
@@ -39,7 +51,7 @@ public class EnemyController2D : MonoBehaviour
     {
 
         float moveDirection = Mathf.Atan2(player.transform.position.y - transform.position.y,
-             player.transform.position.x - transform.position.x);
+        player.transform.position.x - transform.position.x);
 
         horizontal = Mathf.Cos(moveDirection);
         vertical = Mathf.Sin(moveDirection);
@@ -50,7 +62,7 @@ public class EnemyController2D : MonoBehaviour
     }
     private void HandleMovementBehavior()
     {
-       float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
+        float distanceBetweenPlayer = Vector2.Distance(player.transform.position, transform.position);
         if (Mathf.RoundToInt(distanceBetweenPlayer) == 0)
         {
             Stop();
@@ -68,7 +80,7 @@ public class EnemyController2D : MonoBehaviour
     }
     private void Stop()
     {
-      direction.Set(0,0,0);
+        direction.Set(0, 0, 0);
 
     }
 

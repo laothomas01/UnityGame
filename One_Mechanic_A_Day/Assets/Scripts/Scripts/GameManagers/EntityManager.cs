@@ -17,16 +17,12 @@ public class EntityManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
     public static List<GameObject> getEnemyList()
     {
         return enemyList;
     }
-       public static List<GameObject> getBulletList()
+    public static List<GameObject> getBulletList()
     {
-        return enemyList;
+        return bulletList;
     }
 }

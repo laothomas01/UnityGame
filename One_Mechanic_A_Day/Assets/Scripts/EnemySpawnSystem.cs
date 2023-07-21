@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.Video;
 
 public class EnemySpawnSystem : MonoBehaviour
 {
@@ -10,21 +6,27 @@ public class EnemySpawnSystem : MonoBehaviour
     [SerializeField] private float enemySpawnTimer;
     [SerializeField] private float maxEnemySpawnCooldown;
     private float spawnDistance = 10f;
-    [SerializeField] private GameObject enemyPrefab;
-
+    GameObject enemy;
     void Update()
     {
 
-        enemySpawnTimer += Time.deltaTime;
-        if (enemySpawnTimer >= maxEnemySpawnCooldown)
-        {
-            enemyPrefab.transform.position = spawnAroundCamera(MainCamera);
-            GameObject enemy = Instantiate(enemyPrefab);
 
-            //each enemy spawn, add the spawned enemy to a list
-            EntityManager.getEnemyList().Add(enemy);
+        enemySpawnTimer += Time.deltaTime;
+
+        if (enemySpawnTimer > maxEnemySpawnCooldown)
+        {
             enemySpawnTimer = 0;
+
+            enemy = ObjectPoolManager.instance.GetPooledEnemyObject();
+            if (enemy != null)
+            {
+                enemy.transform.position = spawnAroundCamera(MainCamera);
+                EntityManager.getEnemyList().Add(enemy);
+                enemy.SetActive(true);
+            }
+
         }
+
     }
 
     private Vector3 spawnAroundCamera(Camera camera)

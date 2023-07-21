@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargettingSystem : MonoBehaviour
@@ -46,11 +44,7 @@ public class TargettingSystem : MonoBehaviour
     }
     public GameObject getCurrentTarget()
     {
-        if (currentTarget != null)
-        {
-            return currentTarget;
-        }
-        return null;
+        return currentTarget;
     }
     void findTarget()
     {

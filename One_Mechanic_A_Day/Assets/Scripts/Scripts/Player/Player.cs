@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// handle basic player attributes, user input and other player related features 
-/// </summary>
 public class Player : MonoBehaviour
 {
     private float horizontalDirection;
@@ -14,12 +9,16 @@ public class Player : MonoBehaviour
     Rigidbody2D rb2D;
     bool isFacingRight = false;
     TargettingSystem targetSystem;
-    public GameObject testBulletPrefab;
+
+
 
     public float maxAttackCooldown;
     private float currentAttackCooldown;
+
+
     void Start()
     {
+
         currentAttackCooldown = maxAttackCooldown;
         rb2D = GetComponent<Rigidbody2D>();
         targetSystem = GetComponent<TargettingSystem>();
@@ -30,11 +29,6 @@ public class Player : MonoBehaviour
         // // will be testing basic projectile launching
         if (maxAttackCooldown < 0)
         {
-            // if(targetSystem.getCurrentTarget() != null)
-            // {
-            //     Attack(targetSystem.getCurrentTarget());
-            //     // Debug.Log("Attack");
-            // }
             maxAttackCooldown = currentAttackCooldown;
 
             Attack(targetSystem.getCurrentTarget());
@@ -80,18 +74,19 @@ public class Player : MonoBehaviour
     }
     public void Attack(GameObject target)
     {
-        if (target != null)
+        GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
+        if (target != null && bullet != null)
         {
-            testBulletPrefab.transform.position = this.transform.position;
+            bullet.transform.position = this.transform.position;
             float moveDirectionAngle = Mathf.Atan2(target.transform.position.y - this.transform.position.y,
             target.transform.position.x - this.transform.position.x);
-            testBulletPrefab.GetComponent<Bullet>().setDirection(new Vector3(Mathf.Cos(moveDirectionAngle),Mathf.Sin(moveDirectionAngle),0));
-            Instantiate(testBulletPrefab);
+            Vector3 direction = new Vector3(Mathf.Cos(moveDirectionAngle), Mathf.Sin(moveDirectionAngle), 0);
+            bullet.GetComponent<Bullet>().setDirection(direction);
+            bullet.transform.rotation = Quaternion.Euler(0, 0, moveDirectionAngle);
+            bullet.SetActive(true);
         }
-        // testBulletPrefab.transform.position = this.transform.position;
-
-        // Instantiate(testBulletPrefab);
     }
+
 
 
 }

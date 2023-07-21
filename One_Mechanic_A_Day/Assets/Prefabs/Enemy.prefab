@@ -195,3 +195,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: 0}
   moveSpeed: 100
+  testLifeSpan: 20
+  currentTestLifeSpan: 0

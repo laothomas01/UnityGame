@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4000143323494364910}
   - component: {fileID: 2941142066812319392}
   m_Layer: 0
-  m_Name: flame_horizontal_0
+  m_Name: bullet
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,3 +195,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0.00013001362, y: 1, z: 0}
   moveSpeed: 300
+  maxLifeSpan: 5
+  currentLifeSpan: 0
