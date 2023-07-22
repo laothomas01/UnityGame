@@ -1,33 +1,30 @@
 using UnityEngine;
 
+
+
 public class EnemySpawnSystem : MonoBehaviour
 {
     [SerializeField] Camera MainCamera;
-    [SerializeField] private float enemySpawnTimer;
-    [SerializeField] private float maxEnemySpawnCooldown;
+    [SerializeField]
+    private float timeToSpawn;
+    private float timeSinceSpawn;
+
     private float spawnDistance = 10f;
     GameObject enemy;
     void Update()
     {
 
-
-
-        if (enemySpawnTimer > maxEnemySpawnCooldown)
+        timeSinceSpawn += Time.deltaTime;
+        if (timeSinceSpawn >= timeToSpawn)
         {
-            enemySpawnTimer = 0;
-
-            enemy = ObjectPoolManager.instance.GetPooledEnemyObject();
-            enemy.transform.position = spawnAroundCamera(MainCamera);
-            EntityManager.getEnemyList().Add(enemy);
-            enemy.SetActive(true);
+            GameObject newEnemy = ObjectPoolManager.instance.GetEnemy();
+            if(newEnemy != null)
+            {
+                 newEnemy.transform.position = spawnAroundCamera(MainCamera);
+            }
+            //reset spawn timer
+            timeSinceSpawn = 0f;
         }
-        else
-
-        {
-            enemySpawnTimer += Time.deltaTime;
-
-        }
-
     }
 
     private Vector3 spawnAroundCamera(Camera camera)

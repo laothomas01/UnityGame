@@ -26,17 +26,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // // will be testing basic projectile launching
-        if (maxAttackCooldown < 0)
-        {
-            maxAttackCooldown = currentAttackCooldown;
+        // // // will be testing basic projectile launching
+        // if (maxAttackCooldown < 0)
+        // {
+        //     maxAttackCooldown = currentAttackCooldown;
 
-            Attack(targetSystem.getCurrentTarget());
-        }
-        else
-        {
-            maxAttackCooldown -= Time.deltaTime;
-        }
+        //     Attack(targetSystem.getCurrentTarget());
+        // }
+        // else
+        // {
+        //     maxAttackCooldown -= Time.deltaTime;
+        // }
 
 
         Move(Time.deltaTime);
@@ -74,17 +74,21 @@ public class Player : MonoBehaviour
     }
     public void Attack(GameObject target)
     {
-        GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
-        if (target != null && bullet != null)
+        if(targetSystem.getNearestTarget() != null)
         {
-            bullet.transform.position = this.transform.position;
-            float moveDirectionAngle = Mathf.Atan2(target.transform.position.y - this.transform.position.y,
-            target.transform.position.x - this.transform.position.x);
-            Vector3 direction = new Vector3(Mathf.Cos(moveDirectionAngle), Mathf.Sin(moveDirectionAngle), 0);
-            bullet.GetComponent<Bullet>().setDirection(direction);
-            bullet.transform.rotation = Quaternion.Euler(0, 0, moveDirectionAngle);
-            bullet.SetActive(true);
+            
         }
+        // // GameObject bullet = ObjectPoolManager.instance.GetPooledBulletObject();
+        // if (target != null && bullet != null)
+        // {
+        //     bullet.transform.position = this.transform.position;
+        //     float moveDirectionAngle = Mathf.Atan2(target.transform.position.y - this.transform.position.y,
+        //     target.transform.position.x - this.transform.position.x);
+        //     Vector3 direction = new Vector3(Mathf.Cos(moveDirectionAngle), Mathf.Sin(moveDirectionAngle), 0);
+        //     bullet.GetComponent<Bullet>().setDirection(direction);
+        //     bullet.transform.rotation = Quaternion.Euler(0, 0, moveDirectionAngle);
+        //     bullet.SetActive(true);
+        // }
     }
 
 

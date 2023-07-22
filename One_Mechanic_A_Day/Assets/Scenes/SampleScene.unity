@@ -168,9 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1545737787091472042}
-  enemySpawnTimer: 0
-  maxEnemySpawnCooldown: 3
-  enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
+  timeToSpawn: 1
 --- !u!1 &1502049728
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1502049730
 Transform:
   m_ObjectHideFlags: 0
@@ -215,50 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186a6dc75f55414b9df756039de2ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1751334196
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1751334198}
-  - component: {fileID: 1751334197}
-  m_Layer: 0
-  m_Name: EntityManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1751334197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1751334196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb4b1dd5e0d4d3418dc03f75d7c30a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1751334198
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1751334196}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2453086, y: -0.067753516, z: -0.09782794}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
+  enemyPool: []
+  enemyPoolStartSize: 5
 --- !u!212 &1522600702707065427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -482,8 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 300
-  testBulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
-  maxAttackCooldown: 2
+  maxAttackCooldown: 1
 --- !u!114 &8652251879329482858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5d072ae1b73414294b2c41d6768b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 3
+  detectRange: 5
   chooseNextTargetTime: 0
   chooseNextTargetDeadline: 5
 --- !u!1 &8766388487797195449

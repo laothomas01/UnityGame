@@ -1,72 +1,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// improvements: 
+//    - as game gets larger, going to need more pools
+///   - can use 
+/// </summary>
 public class ObjectPoolManager : MonoBehaviour
 {
-   public GameObject bulletPrefab;
-   public GameObject enemyPrefab;
-   public static List<GameObject> bulletPool = new List<GameObject>();
-   public static List<GameObject> enemyPool = new List<GameObject>();
+   [SerializeField]
+   private GameObject enemyPrefab;
+   [SerializeField]
+   private List<GameObject> enemyPool = new List<GameObject>();
+   private List<GameObject> activeEnemies = new List<GameObject>();
+
+   private List<GameObject> bulletPool = new List<GameObject>();
+   private List<GameObject> activeBullets = new List<GameObject>();
+   [SerializeField]
+   public int enemyPoolStartSize;
    public static ObjectPoolManager instance;
-   public float bulletPoolAmount;
-   public float enemyPoolAmount;
-
-   GameObject bulletToPool;
-   GameObject enemyToPool;
-
-   public void Start()
+   private void Start()
    {
       if (instance == null)
       {
          instance = this;
       }
-      initializeBulletPool(bulletPoolAmount);
-      initializeEnemyPool(enemyPoolAmount);
-
+      initializeEnemyPool(enemyPoolStartSize);
    }
-
-   public void initializeBulletPool(float poolAmount)
+   void Update()
    {
-      for (int i = 0; i < poolAmount; i++)
+   }
+   //load enemy pool with fixed amount of enemy objects
+   public void initializeEnemyPool(float amount)
+   {
+      for (int i = 0; i < amount; i++)
       {
-         bulletToPool = Instantiate(bulletPrefab);
-         bulletToPool.SetActive(false);
-         bulletPool.Add(bulletToPool);
+         GameObject enemy = Instantiate(enemyPrefab);
+         enemyPool.Add(enemy);
+         enemy.SetActive(false);
       }
    }
 
-   public void initializeEnemyPool(float poolAmount)
+   //retrieve object from enemy pool
+   public GameObject GetEnemy()
    {
-      for (int i = 0; i < poolAmount; i++)
+      if (enemyPool.Count > 0)
       {
-         enemyToPool = Instantiate(enemyPrefab);
-         enemyToPool.SetActive(false);
-         enemyPool.Add(enemyToPool);
-      }
-   }
-
-   public GameObject GetPooledBulletObject()
-   {
-      for (int i = 0; i < bulletPoolAmount; i++)
-      {
-         if (!bulletPool[i].activeInHierarchy)
-         {
-            return bulletPool[i];
-         }
+         //retrieve first element from pool
+         GameObject enemy = enemyPool[0];
+         //remove first element from pool after retrieval
+         enemy.SetActive(true);
+         enemyPool.Remove(enemy);
+         return enemy;
       }
       return null;
    }
 
-   public GameObject GetPooledEnemyObject()
+   public List<GameObject> getActiveEnemiesList()
    {
-      for (int i = 0; i < enemyPoolAmount; i++)
-      {
-         GameObject enemy = enemyPool[i];
-         if (!enemy.activeInHierarchy)
-         {
-            return enemyPool[i];
-         }
-      }
-      return null;
+      return activeEnemies;
+   }
+
+   //puts enemy object back to pool
+   public void ReturnEnemy(GameObject enemy)
+   {
+      enemyPool.Add(enemy);
+      enemy.SetActive(false);
    }
 }

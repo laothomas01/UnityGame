@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
-/// We will have camera follow the player with interpolated movement
+/// - implement performance enhances, or camera features in this class
 /// </summary>
 public class MainCamera : MonoBehaviour
 {

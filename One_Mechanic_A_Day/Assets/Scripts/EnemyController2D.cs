@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,15 +17,32 @@ public class EnemyController2D : MonoBehaviour
     Rigidbody2D rb2D;
     bool isFacingRight = false;
     private GameObject player;
-
+    EnemyReturn enemyReturn;
+    [SerializeField]
+    float testLifeSpan;
+    float testCurrentLifeSpan;
+    void Awake()
+    {
+        // Debug.Log(this.GetHashCode() + "is awake!");
+        ObjectPoolManager.instance.getActiveEnemiesList().Add(this.gameObject);
+        Debug.Log(ObjectPoolManager.instance.getActiveEnemiesList().Count);
+    }
     void Start()
     {
-        this.gameObject.SetActive(false);
+        testCurrentLifeSpan = testLifeSpan;
+        enemyReturn = GetComponent<EnemyReturn>();
         player = GameObject.Find("Player");
         rb2D = GetComponent<Rigidbody2D>();
+
     }
     void Update()
     {
+        // testLifeSpan -= Time.deltaTime;
+        // if(testLifeSpan <= 0)
+        // {
+        //     testLifeSpan = testCurrentLifeSpan;
+        //     this.gameObject.SetActive(false);            
+        // }
         HandleMovementBehavior();
         HandleMoveAnimations();
 
