@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
 
 public class BulletController2D : MonoBehaviour
 {
@@ -31,34 +28,48 @@ public class BulletController2D : MonoBehaviour
     //     rb.velocity = direction * bulletSpeed * Time.deltaTime;
     // }
 
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Enemy"))
-    //     {
-    //         //useful for handling explosions or corpse explosion
-    //         Collider2D[] overlappingColliders = new Collider2D[1];
-    //         //filter type of collider to use
-    //         ContactFilter2D filter = new ContactFilter2D();
-    //         filter.useTriggers = true;
-    //         int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
-    //         for (int i = 0; i < numColliders; i++)
-    //         {
-    //             if (overlappingColliders[i].CompareTag("Enemy"))
-    //             {
-    //                 // Handle the collision with the enemy
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+            // //array of detected 2d coll--iders
+            // Collider2D[] overlappingColliders = new Collider2D[1];
+            // ContactFilter2D filter = new ContactFilter2D();
+            // //want to use trigger collision
+            // filter.useTriggers = true;
+            // int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
+            // for (int i = 0; i < numColliders; i++)
+            // {
+            //     if (overlappingColliders[i].CompareTag("Enemy"))
+            //     {
+            //         this.gameObject.SetActive(false);
+            //         break;
+            //     }
+            // }
+        // if (other.CompareTag("Enemy"))
+        // {
+        //     //useful for handling explosions or corpse explosion
+        //     Collider2D[] overlappingColliders = new Collider2D[1];
+        //     //filter type of collider to use
+        //     ContactFilter2D filter = new ContactFilter2D();
+        //     filter.useTriggers = true;
+        //     int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
+        //     for (int i = 0; i < numColliders; i++)
+        //     {
+        //         if (overlappingColliders[i].CompareTag("Enemy"))
+        //         {
+        //             // Handle the collision with the enemy
 
-    //                 // Deactivate the enemy
+        //             // Deactivate the enemy
                     
-    //                 // Break out of the loop after deactivating the first enemy hit
-    //                 // TargetSystem.GetProjectileList().Remove(this.gameObject);
-    //                 setObjectActive(false);
+        //             // Break out of the loop after deactivating the first enemy hit
+        //             // TargetSystem.GetProjectileList().Remove(this.gameObject);
+        //             setObjectActive(false);
 
-    //                 break;
-    //             }
-    //         }
-    //     }
+        //             break;
+        //         }
+        //     }
+        // }
 
-    // }
+    }
 
     // public Rigidbody2D GetRigidbody2D()
     // {

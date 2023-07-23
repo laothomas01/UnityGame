@@ -21,12 +21,12 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
-        // if (lifeSpan <= 0)
-        // {
-        //     lifeSpan = currentLifeSpan;
-        //     this.gameObject.SetActive(false);
-        // }
-        // lifeSpan -= Time.deltaTime;
+        if (lifeSpan <= 0)
+        {
+            lifeSpan = currentLifeSpan;
+            this.gameObject.SetActive(false);
+        }
+        lifeSpan -= Time.deltaTime;
         Move(Time.deltaTime);
     }
     private void Move(float dt)
@@ -40,6 +40,23 @@ public class Bullet : MonoBehaviour
     public void setDirection(Vector3 direction)
     {
         direction.Set(direction.x, direction.y, direction.z);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        Collider2D[] overlappingColliders = new Collider2D[1];
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        int numColliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(), filter, overlappingColliders);
+        for (int i = 0; i < numColliders; i++)
+        {
+            if (overlappingColliders[i].CompareTag("Enemy"))
+            {
+                this.gameObject.SetActive(false);
+                break;
+            }
+        }
     }
 
 

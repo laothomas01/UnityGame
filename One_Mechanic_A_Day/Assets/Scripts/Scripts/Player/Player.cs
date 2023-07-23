@@ -29,7 +29,8 @@ public class Player : MonoBehaviour
         if (maxAttackCooldown <= 0)
         {
             maxAttackCooldown = currentAttackCooldown;
-            Attack(targetSystem.getNearestTarget());
+            Debug.Log(targetSystem.GetNearestTarget());
+            Attack(targetSystem.GetNearestTarget());
         }
 
         maxAttackCooldown -= Time.deltaTime;

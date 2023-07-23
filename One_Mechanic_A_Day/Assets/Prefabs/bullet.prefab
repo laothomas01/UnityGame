@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 151683055199833625}
   - component: {fileID: 1015235556427062433}
   - component: {fileID: 898239286316020935}
-  - component: {fileID: 4000143323494364910}
   - component: {fileID: 2941142066812319392}
+  - component: {fileID: 5004497620747464486}
+  - component: {fileID: 5671705821062321251}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Projectile
@@ -136,8 +137,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &4000143323494364910
-BoxCollider2D:
+--- !u!114 &2941142066812319392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989901727591452983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bf73c32a476c64fa42606cdb8cff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0.00013001362, y: 1, z: 0}
+  moveSpeed: 300
+  lifeSpan: 5
+  currentLifeSpan: 0
+--- !u!58 &5004497620747464486
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -168,20 +185,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.08, y: 0.06}
-    newSize: {x: 0.08, y: 0.06}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.0025711404, y: 0.00056628336}
   serializedVersion: 2
-  m_Size: {x: 0.08, y: 0.06}
-  m_EdgeRadius: 0
---- !u!114 &2941142066812319392
+  m_Radius: 0.04166509
+--- !u!114 &5671705821062321251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,10 +197,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8989901727591452983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71bf73c32a476c64fa42606cdb8cff46, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fa8e160d482aef43ac63ed7cf46fce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0.00013001362, y: 1, z: 0}
-  moveSpeed: 300
-  lifeSpan: 0
-  currentLifeSpan: 0
