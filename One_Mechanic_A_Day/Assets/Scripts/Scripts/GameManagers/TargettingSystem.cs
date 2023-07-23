@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TargettingSystem : MonoBehaviour
 {
-    GameObject currentTarget = null;
+   // GameObject currentTarget = null;
     public float detectRange = 0;
-    public float chooseNextTargetTime = 0;
-    public float chooseNextTargetDeadline;
+   // public float chooseNextTargetTime = 0;
+   // public float chooseNextTargetDeadline;
 
     void Update()
     {
@@ -63,14 +63,14 @@ public class TargettingSystem : MonoBehaviour
 
 
     }
-    void setCurrentTarget(GameObject target)
-    {
-        currentTarget = target;
-    }
-    public GameObject getCurrentTarget()
-    {
-        return currentTarget;
-    }
+    // void setCurrentTarget(GameObject target)
+    // {
+    //     currentTarget = target;
+    // }
+    // public GameObject getCurrentTarget()
+    // {
+    //     return currentTarget;
+    // }
     public GameObject getNearestTarget()
     {
         // foreach (GameObject enemy in EntityManager.getEnemyList())
@@ -123,19 +123,19 @@ public class TargettingSystem : MonoBehaviour
         }
         return null;
     }
-    void startChooseNextTargetTimer(float dt)
-    {
-        chooseNextTargetTime += dt;
-    }
-    void cancelChooseNextTargetTimer()
-    {
-        chooseNextTargetTime = 0;
-    }
-    public void handleChooseNextTargetEvent()
-    {
-        if (chooseNextTargetTime > chooseNextTargetDeadline)
-        {
-            setCurrentTarget(null);
-        }
-    }
+    // void startChooseNextTargetTimer(float dt)
+    // {
+    //     chooseNextTargetTime += dt;
+    // }
+    // void cancelChooseNextTargetTimer()
+    // {
+    //     chooseNextTargetTime = 0;
+    // }
+    // public void handleChooseNextTargetEvent()
+    // {
+    //     if (chooseNextTargetTime > chooseNextTargetDeadline)
+    //     {
+    //         setCurrentTarget(null);
+    //     }
+    // }
 }

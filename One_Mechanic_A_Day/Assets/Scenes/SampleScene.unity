@@ -215,7 +215,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6383010760682475198, guid: 1225dd004f1cc1940947ee9626a84156, type: 3}
   enemyPool: []
+  bulletPrefab: {fileID: 8989901727591452983, guid: 7ab7527d5d9e81940ae588c4a10ad5f0, type: 3}
   enemyPoolStartSize: 5
+  bulletPoolStartSize: 5
 --- !u!212 &1522600702707065427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -433,7 +435,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7574127931243387176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d2ce9d7cd026a84e942a05fb3f96f88, type: 3}
   m_Name: 
@@ -447,14 +449,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7574127931243387176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5d072ae1b73414294b2c41d6768b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 5
-  chooseNextTargetTime: 0
-  chooseNextTargetDeadline: 5
 --- !u!1 &8766388487797195449
 GameObject:
   m_ObjectHideFlags: 0

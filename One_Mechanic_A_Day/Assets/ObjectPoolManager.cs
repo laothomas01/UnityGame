@@ -14,10 +14,12 @@ public class ObjectPoolManager : MonoBehaviour
    private List<GameObject> enemyPool = new List<GameObject>();
    private List<GameObject> activeEnemies = new List<GameObject>();
 
+   [SerializeField]
+   private GameObject bulletPrefab;
    private List<GameObject> bulletPool = new List<GameObject>();
    private List<GameObject> activeBullets = new List<GameObject>();
-   [SerializeField]
    public int enemyPoolStartSize;
+   public int bulletPoolStartSize;
    public static ObjectPoolManager instance;
    private void Start()
    {
@@ -26,6 +28,8 @@ public class ObjectPoolManager : MonoBehaviour
          instance = this;
       }
       initializeEnemyPool(enemyPoolStartSize);
+      initializeBulletPool(bulletPoolStartSize);
+
    }
    void Update()
    {
@@ -50,6 +54,7 @@ public class ObjectPoolManager : MonoBehaviour
          GameObject enemy = enemyPool[0];
          //remove first element from pool after retrieval
          enemy.SetActive(true);
+         //when enemy is enabled, also enable its controller script
          enemyPool.Remove(enemy);
          return enemy;
       }
@@ -67,4 +72,41 @@ public class ObjectPoolManager : MonoBehaviour
       enemyPool.Add(enemy);
       enemy.SetActive(false);
    }
+
+   public void initializeBulletPool(float amount)
+   {
+      for (int i = 0; i < amount; i++)
+      {
+         GameObject bullet = Instantiate(bulletPrefab);
+         bulletPool.Add(bullet);
+         bullet.SetActive(false);
+      }
+   }
+
+   public GameObject GetBullet()
+   {
+      if (bulletPool.Count > 0)
+      {
+         //retrieve first bullet element from pool
+         GameObject bullet = bulletPool[0];
+         //remove first bullet element from pool after retrieval
+         bullet.SetActive(true);
+         //when bullet is enabled, also enable its controller script
+         bulletPool.Remove(bullet);
+         return bullet;
+      }
+      return null;
+   }
+   public List<GameObject> getActiveBulletsList()
+   {
+      return activeBullets;
+   }
+
+   //puts bullet object back to pool
+   public void ReturnBullet(GameObject bullet)
+   {
+      bulletPool.Add(bullet);
+      bullet.SetActive(false);
+   }
+
 }
