@@ -4,42 +4,39 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] Vector3 direction;
     [SerializeField] private float moveSpeed;
-    private float horizontal;
-    private float vertical;
     Rigidbody2D rb2D;
     public float lifeSpan;
     public float currentLifeSpan;
-    void Awake()
-    {
-        ObjectPoolManager.instance.getActiveBulletsList().Add(this.gameObject);
-        // Debug.Log(ObjectPoolManager.instance.getActiveBulletsList().Count);
-    }
+     bool isFacingRight = false;
     void Start()
     {
+        if(this.gameObject.activeInHierarchy)
+        {
+            ObjectPoolManager.instance.getActiveBulletsList().Add(this.gameObject);
+        }
         currentLifeSpan = lifeSpan;
         rb2D = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        if (lifeSpan <= 0)
-        {
-            lifeSpan = currentLifeSpan;
-            this.gameObject.SetActive(false);
-        }
+        // if (lifeSpan <= 0)
+        // {
+        //     lifeSpan = currentLifeSpan;
+        //     this.gameObject.SetActive(false);
+        // }
         lifeSpan -= Time.deltaTime;
         Move(Time.deltaTime);
+        // Flip();
     }
     private void Move(float dt)
     {
         rb2D.velocity = direction * moveSpeed * dt;
+        HandleMoveAnimations();
+
     }
     public void setDirection(float x, float y)
     {
         direction.Set(x, y, 0);
-    }
-    public void setDirection(Vector3 direction)
-    {
-        direction.Set(direction.x, direction.y, direction.z);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,11 +50,29 @@ public class Bullet : MonoBehaviour
         {
             if (overlappingColliders[i].CompareTag("Enemy"))
             {
+                // GameObject target = overlappingColliders[i].gameObject;
+                // ObjectPoolManager.instance.getActiveEnemiesList().Remove(target);
+                // target.SetActive(false);
+                // ObjectPoolManager.instance.getActiveBulletsList().Remove(this.gameObject);
                 this.gameObject.SetActive(false);
                 break;
             }
         }
     }
+    private void HandleMoveAnimations()
+    {
+        GetComponent<Animator>().Play("Fireball_Move");
+    }
+    //  private void Flip()
+    // {
+    //     if (isFacingRight && direction.x < 0 || !isFacingRight && direction.x > 0)
+    //     {
+    //         isFacingRight = !isFacingRight;
+    //         Vector3 localScale = this.transform.localScale;
+    //         localScale.x *= -1f;
+    //         transform.localScale = localScale;
+    //     }
+    // }
 
 
 }

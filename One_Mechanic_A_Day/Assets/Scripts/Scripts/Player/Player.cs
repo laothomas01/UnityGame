@@ -1,88 +1,106 @@
+
+
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float horizontalDirection;
-    private float verticalDirection;
-    Vector3 direction;
-    [SerializeField] private float moveSpeed;
-    Rigidbody2D rb2D;
+
+    Rigidbody2D rb;
+    public float moveSpeed = 5f;
     bool isFacingRight = false;
-    TargettingSystem targetSystem;
-
-
-
-    public float maxAttackCooldown;
-    private float currentAttackCooldown;
-
-
+    private float vertical;
+    private float horizontal;
+    Vector2 moveDir;
     void Start()
     {
-
-        currentAttackCooldown = maxAttackCooldown;
-        rb2D = GetComponent<Rigidbody2D>();
-        targetSystem = GetComponent<TargettingSystem>();
+        //Fetch the Rigidbody from the GameObject with this script attached
+        rb = GetComponent<Rigidbody2D>();
     }
 
+    // Frame rate dependent
     void Update()
     {
-        if (maxAttackCooldown <= 0)
-        {
-            maxAttackCooldown = currentAttackCooldown;
-            Debug.Log(targetSystem.GetNearestTarget());
-            Attack(targetSystem.GetNearestTarget());
-        }
-
-        maxAttackCooldown -= Time.deltaTime;
-        Move(Time.deltaTime);
-        Flip();
+        InputManagement();
     }
-    private void Move(float dt)
+    // Frame rate independent
+    void FixedUpdate()
     {
-        horizontalDirection = Input.GetAxisRaw("Horizontal");
-        verticalDirection = Input.GetAxisRaw("Vertical");
-        direction.Set(horizontalDirection, verticalDirection, 0);
-        rb2D.velocity = direction * moveSpeed * dt;
-        HandleMoveAnimations();
+        Move();
     }
-    private void Flip()
+    void InputManagement()
     {
-        if (isFacingRight && horizontalDirection < 0 || !isFacingRight && horizontalDirection > 0)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = this.transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY =  Input.GetAxis("Vertical");
+        moveDir = new Vector2(moveX,moveY).normalized;
     }
-    private void HandleMoveAnimations()
+    void Move()
     {
-        if (horizontalDirection != 0 || verticalDirection != 0)
-        {
-            GetComponent<Animator>().Play("Run_Anim");
-        }
-        else
-        {
-            GetComponent<Animator>().Play("Idle_Anim");
-
-        }
-    }
-    public void Attack(GameObject target)
-    {
-        if (target != null)
-        {
-            GameObject bullet = ObjectPoolManager.instance.GetBullet();
-            if (bullet != null)
-            {
-                bullet.transform.position = this.transform.position;
-                float angleBetweenPositionVectors = Mathf.Atan2(target.transform.position.y - this.transform.position.y, target.transform.position.x - this.transform.position.x);
-                bullet.GetComponent<Bullet>().setDirection(Mathf.Cos(angleBetweenPositionVectors),
-                Mathf.Sin(angleBetweenPositionVectors));
-                bullet.transform.rotation = Quaternion.Euler(0, 0, angleBetweenPositionVectors);
-            }
-        }
+        //should i use moveSpeed * Time.FixedDeltaTime?
+        rb.velocity = new Vector2(moveDir.x * moveSpeed,moveDir.y * moveSpeed);
     }
 
+    // public override float moveSpeed => 10;
 
+    // public override Vector3 moveDirection => new Vector3();
 
+    // public override bool isFacingRight => false;
+
+    // void Start()
+    // {
+
+    // }
+
+    // // private float horizontalMove;
+    // // private float verticalMove;
+    // // private bool isFacingRight = false;
+    // // private Vector3 moveDirection;
+    // // public float moveSpeed;
+    // // Rigidbody2D rigidbody2D;
+
+    // // void Start()
+    // // {
+    // //     rigidbody2D = GetComponent<Rigidbody2D>();
+    // // }
+    // // void Update()
+    // // {
+    // //     Flip();
+
+    // // }
+    // // void FixedUpdate()
+    // // {
+    // //     Move(Time.fixedDeltaTime);
+    // // }
+    // // private void Flip()
+    // // {
+    // //     if (isFacingRight && moveDirection.x < 0 || !isFacingRight && moveDirection.x > 0)
+    // //     {
+    // //         isFacingRight = !isFacingRight;
+    // //         Vector3 localScale = this.transform.localScale;
+    // //         localScale.x *= -1f;
+    // //         transform.localScale = localScale;
+    // //     }
+    // // }
+
+    // // public void Move(float dt)
+    // // {
+
+    // //     horizontalMove = Input.GetAxis("Horizontal");
+    // //     verticalMove = Input.GetAxis("Vertical");
+    // //     moveDirection.Set(horizontalMove, verticalMove, 0);
+    // //     rigidbody2D.velocity = moveDirection * moveSpeed * dt;
+    // // }
+    // public override void Flip()
+    // {
+    //     throw new System.NotImplementedException();
+    // }
+
+    // public override void Move(float dt)
+    // {
+    //     throw new System.NotImplementedException();
+    // }
+
+    // public override void Stop()
+    // {
+    //     throw new System.NotImplementedException();
+    // }
 }

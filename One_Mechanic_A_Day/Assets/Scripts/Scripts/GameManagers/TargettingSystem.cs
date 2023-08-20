@@ -17,8 +17,8 @@ public class TargettingSystem : MonoBehaviour
             if (enemy.activeInHierarchy)
             {
                 float distance = Vector3.Distance(enemy.transform.position, this.transform.position);
-                // Debug.Log("enemy active:" + enemy.name + "distance:" + distance);
-                if (distance < detectRange)
+                Debug.Log("distance:" + distance);
+                if (distance <= detectRange)
                 {
                     // Debug.Log("Found target!");
                     return enemy;

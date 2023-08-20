@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-///  Handle the front-end and back-end for targetting game objects
+///  
 /// </summary>
 public class TargetSystem : MonoBehaviour
 {
+    GameObject currentTarget = null;
+    
     // public float detectionRange_;
     // [SerializeField] private float waitToDetectClosestEnemyTimer_;
     // public float waitToDetectClosestEnemyTimeout_;
@@ -115,5 +117,9 @@ public class TargetSystem : MonoBehaviour
     // public static List<GameObject> GetProjectileList()
     // {
     //     return projectiles;
-    // }
+    // }\
+    public void setCurrentTarget(GameObject target)
+    {
+        currentTarget = target;
+    }
 }

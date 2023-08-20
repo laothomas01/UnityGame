@@ -10,10 +10,10 @@ public class EnemySpawnSystem : MonoBehaviour
     private static float spawnDistance = 10f;
 
     public static EnemySpawnSystem instance;
-    
+
     void Start()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -25,8 +25,9 @@ public class EnemySpawnSystem : MonoBehaviour
         if (timeSinceSpawn >= timeToSpawn)
         {
             ObjectPoolManager.instance.GetEnemy();
-
             timeSinceSpawn = 0f;
+            Debug.Log(ObjectPoolManager.instance.getActiveEnemiesList().Count);
+
         }
     }
 
